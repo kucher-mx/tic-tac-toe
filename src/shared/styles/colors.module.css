@@ -1,0 +1,11 @@
+html {
+	&[data-theme='dark'] {
+    color-scheme: dark;
+    
+		--color-backgound: #ff4;
+  }
+
+  &[data-theme='light'] {
+    --color-backgound: #f6f;
+  }
+}
