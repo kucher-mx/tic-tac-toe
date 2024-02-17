@@ -1,3 +1,6 @@
+@value vars: "./vars.module.css";
+@value system-font from vars;
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -50,4 +53,14 @@ button {
   /* отображаем курсор в виде руки при наведении; некоторые
   считают, что необходимо оставлять стрелочный вид для кнопок */
   cursor: pointer;
+}
+
+/* MODAL BACKDROP */
+:global(.pure-modal-backdrop) {
+	backdrop-filter: blur(17.5px);
+	background-color: var(--color-shadow-bg);
+}
+
+body {
+	font-family: system-font;
 }

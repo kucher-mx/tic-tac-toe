@@ -7,8 +7,14 @@ import { AI_EASY } from './app.consts';
 import { AppContextType } from './app.types';
 
 export const appContext = React.createContext<AppContextType>({
+  // ai level
   currentAiLevel: AI_EASY,
   toggleAiLevel: () => {},
+
+  // auth popup
+  isAuthPopupOpen: false,
+  openAuthPopup: () => {},
+  closeAuthPopup: () => {},
 });
 
 export const useAppContext = () => {

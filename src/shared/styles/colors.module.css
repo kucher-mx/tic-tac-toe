@@ -2,6 +2,7 @@ html {
 	&[data-theme='dark'] {
 		--color-backgound: #f1faee;
     --color-border: #1d3557;
+    --color-shadow-bg: #2d2d2dcc;
     
     --color-cell-hover: #fefae0;
     --color-cell-value: #003049;
@@ -11,11 +12,13 @@ html {
     /* colors */
     --color-red: #e63946;
     --color-green: #57cc99;
+    --color-accent: #ffe566;
   }
 
   &[data-theme='light'] {
     --color-backgound: #f1faee;
     --color-border: #1d3557;
+    --color-shadow-bg: #3b3b3bcc;
 
     --color-cell-hover: #fefae0;
     --color-cell-value: #003049;
@@ -25,5 +28,6 @@ html {
     /* colors */
     --color-red: #e63946;
     --color-green: #57cc99;
+    --color-accent: #ffe566;
   }
 }
