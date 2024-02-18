@@ -32,13 +32,19 @@ export const AuthPopup = ({ isOpen, handleClose }: Props) => {
     }));
   };
 
-  const handleCredentialsSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleCredentialsSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (isRegister) {
-      createUserWithCredentials(formData.email, formData.password);
-    } else {
-      signInWithCredentials(formData.email, formData.password);
+    try {
+      if (isRegister) {
+        await createUserWithCredentials(formData.email, formData.password);
+      } else {
+        await signInWithCredentials(formData.email, formData.password);
+      }
+
+      handleClose();
+    } catch (error) {
+      console.error('authorization error', { error });
     }
   };
 

@@ -1,6 +1,4 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import { doc, setDoc } from 'firebase/firestore';
 import {
   signInWithPopup,
   GoogleAuthProvider,
@@ -11,9 +9,13 @@ import {
 // types
 import { UserContextType, UserType } from './user.types';
 
+// helpers
+import { firebaseAuth } from '../../shared/firebase';
+import { getUserFromFirestore } from './helpers/getUser';
+import { createUserInFirestore } from './helpers/createUser';
+
 // context
 import { userContext } from './user.context';
-import { firebaseAuth, firestore } from '../../shared/firebase';
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<UserType>(null);
@@ -28,23 +30,31 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       const authResult = await signInWithPopup(firebaseAuth, provider);
       const userCredential = GoogleAuthProvider.credentialFromResult(authResult);
-      console.log('auth by google success', { userCredential, authResult });
 
       if (!userCredential) throw new Error('auth by google credentials are empty');
 
-      try {
-        await setDoc(doc(firestore, 'users', authResult.user.uid), {
-          id: authResult.user.uid,
-          rating: 100,
-          name: authResult.user.displayName ?? '',
+      const userId = authResult.user.uid;
+
+      const { user } = await getUserFromFirestore(userId);
+
+      if (!user) {
+        const { user } = await createUserInFirestore(userId, {
+          nickname: authResult.user.displayName,
+          email: authResult.user.email,
+          rating: 0,
         });
-      } catch (writingToDbError) {
-        console.error('createUserRecord error', { writingToDbError });
+
+        console.log('created user after google login', { user });
+        setUser(user);
+        return { user };
+      } else {
+        console.log('signed in user after google login, user exists', { user });
+        setUser(user);
+        return { user };
       }
     } catch (error) {
       console.error('auth by google error', {
         error,
-        // credential: GoogleAuthProvider.credentialFromError(error),
       });
     }
   }, []);
@@ -52,42 +62,34 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const createUserWithCredentials = useCallback(async (email: string, password: string) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(firebaseAuth, email, password);
-      console.log('createUserWithEmailAndPassword success', { userCredential });
 
-      try {
-        await setDoc(
-          doc(firestore, 'users', userCredential.user.uid),
-          {
-            id: userCredential.user.uid,
-            rating: 10,
-            name: userCredential.user.displayName ?? '',
-          },
-          { merge: true },
-        );
-      } catch (writingToDbError) {
-        console.error('createUserRecord error', { writingToDbError });
-      }
+      console.log('create user by credentials success', { userCredential });
+
+      const { user } = await createUserInFirestore(userCredential.user.uid, {
+        nickname: userCredential.user.displayName,
+        email: '',
+        rating: 0,
+      });
+
+      setUser(user);
+      return { user };
     } catch (error) {
-      console.error('createUserWithEmailAndPassword error', { error });
+      console.error('create user by credentials error', { error });
     }
   }, []);
 
   const signInWithCredentials = useCallback(async (email: string, password: string) => {
     try {
       const userCredential = await signInWithEmailAndPassword(firebaseAuth, email, password);
-      console.log('signInWithEmailAndPassword success', { userCredential });
 
-      try {
-        await setDoc(doc(firestore, 'users', userCredential.user.uid), {
-          id: userCredential.user.uid,
-          rating: 0,
-          name: userCredential.user.displayName ?? '',
-        });
-      } catch (writingToDbError) {
-        console.error('createUserRecord error', { writingToDbError });
-      }
+      console.log('log in user by credentials success', { userCredential });
+
+      const { user } = await getUserFromFirestore(userCredential.user.uid);
+
+      setUser(user);
+      return { user };
     } catch (error) {
-      console.error('signInWithEmailAndPassword error', { error });
+      console.error('log in user by credentials error', { error });
     }
   }, []);
 

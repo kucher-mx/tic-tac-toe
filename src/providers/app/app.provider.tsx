@@ -10,7 +10,7 @@ import { AI_EASY } from './app.consts';
 import { AiLevelType, AppContextType } from './app.types';
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [aiLevel, setAiLevel] = useState<AiLevelType>(AI_EASY);
-  const [isAuthPopupOpen, setIsAuthPopupOpen] = useState(true);
+  const [isAuthPopupOpen, setIsAuthPopupOpen] = useState(false);
 
   const memoValue = useMemo<AppContextType>(
     () => ({
