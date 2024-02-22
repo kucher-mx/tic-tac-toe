@@ -1,1 +1,11 @@
 @value system-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+
+@value tablet-min: 768px;
+
+html {
+	--transform-menu: translateY(0);
+  --transition-duration: 0.3s;
+
+  --transform-toast: 0;
+  --toast-transition-duration: 0;
+}

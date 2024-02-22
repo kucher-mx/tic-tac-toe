@@ -4,10 +4,12 @@ import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  setPersistence,
+  browserLocalPersistence,
 } from 'firebase/auth';
 
 // types
-import { UserContextType, UserType } from './user.types';
+import { UserContextType, UserSchemaType, UserType } from './user.types';
 
 // helpers
 import { firebaseAuth } from '../../shared/firebase';
@@ -16,18 +18,29 @@ import { createUserInFirestore } from './helpers/createUser';
 
 // context
 import { userContext } from './user.context';
+import { updateUserInFirestore } from './helpers/updateUser';
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<UserType>(null);
 
   const logout = useCallback(() => {
-    setUser(null);
+    try {
+      firebaseAuth.signOut();
+      setUser(null);
+    } catch (error) {
+      console.error('sign out error', {
+        error,
+      });
+    }
   }, []);
 
+  // ------------------- AUTHORIZATION METHODS
   const signInWithGoogle = useCallback(async () => {
     const provider = new GoogleAuthProvider();
 
     try {
+      await setPersistence(firebaseAuth, browserLocalPersistence);
+
       const authResult = await signInWithPopup(firebaseAuth, provider);
       const userCredential = GoogleAuthProvider.credentialFromResult(authResult);
 
@@ -61,6 +74,8 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   const createUserWithCredentials = useCallback(async (email: string, password: string) => {
     try {
+      await setPersistence(firebaseAuth, browserLocalPersistence);
+
       const userCredential = await createUserWithEmailAndPassword(firebaseAuth, email, password);
 
       console.log('create user by credentials success', { userCredential });
@@ -80,6 +95,8 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   const signInWithCredentials = useCallback(async (email: string, password: string) => {
     try {
+      await setPersistence(firebaseAuth, browserLocalPersistence);
+
       const userCredential = await signInWithEmailAndPassword(firebaseAuth, email, password);
 
       console.log('log in user by credentials success', { userCredential });
@@ -93,6 +110,19 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
 
+  // ------------------- OTHER USER METHODS
+
+  const updateUser = useCallback(async (userData: UserSchemaType) => {
+    try {
+      const userId = userData.id;
+      const { user } = await updateUserInFirestore(userId, userData);
+
+      return { user };
+    } catch (error) {
+      console.error('update user error', { error });
+    }
+  }, []);
+
   const memoValue = useMemo<UserContextType>(
     () => ({
       user,
@@ -100,8 +130,10 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       signInWithGoogle,
       signInWithCredentials,
       createUserWithCredentials,
+      updateUser,
+      setUserState: (user: UserType) => setUser(user),
     }),
-    [createUserWithCredentials, logout, signInWithCredentials, signInWithGoogle, user],
+    [createUserWithCredentials, logout, signInWithCredentials, signInWithGoogle, updateUser, user],
   );
 
   return <userContext.Provider value={memoValue}>{children}</userContext.Provider>;

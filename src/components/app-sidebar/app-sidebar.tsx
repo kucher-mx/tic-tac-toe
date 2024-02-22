@@ -1,4 +1,4 @@
-import { Link, useMatch } from 'react-router-dom';
+import { Link, useMatch, useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 
 // context
@@ -15,15 +15,31 @@ import styles from './app-sidebar.module.css';
 import { useAppContext } from '../../providers/app/app.context';
 
 export const AppSidebar = () => {
-  const { user } = useUserContext();
+  const { user, logout } = useUserContext();
   const { openAuthPopup } = useAppContext();
 
+  const navigate = useNavigate();
+
+  const isMainPage = useMatch(MAIN_PAGE_ROUTE);
   const isProfilePage = useMatch(PROFILE_PAGE_ROUTE);
   const isRatingPage = useMatch(RATING_PAGE_ROUTE);
 
+  const handleLogout = () => {
+    logout();
+
+    if (!isMainPage) navigate(MAIN_PAGE_ROUTE);
+  };
+
   return (
     <div className={classNames(styles['app-sidebar'])}>
-      <Link to={'/'}>Tic Tac Toe</Link>
+      <Link
+        to={'/'}
+        className={classNames({
+          [styles.active]: isMainPage,
+        })}
+      >
+        Головна
+      </Link>
 
       {Boolean(user) ? (
         <>
@@ -43,6 +59,9 @@ export const AppSidebar = () => {
           >
             Рейтинг
           </Link>
+          <button className={classNames(styles['app-auth-btn'])} onClick={handleLogout}>
+            Вийти
+          </button>
         </>
       ) : (
         <button className={classNames(styles['app-auth-btn'])} onClick={openAuthPopup}>

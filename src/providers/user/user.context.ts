@@ -9,6 +9,8 @@ export const userContext = React.createContext<UserContextType>({
   signInWithGoogle: () => {},
   createUserWithCredentials: () => {},
   signInWithCredentials: () => {},
+  updateUser: () => {},
+  setUserState: () => {},
 });
 
 export const useUserContext = () => {

@@ -11,4 +11,6 @@ export type UserContextType = {
   signInWithCredentials: (email: string, password: string) => void;
   signInWithGoogle: () => void;
   logout: () => void;
+  updateUser: (user: UserSchemaType) => void;
+  setUserState: (user: UserType) => void;
 };

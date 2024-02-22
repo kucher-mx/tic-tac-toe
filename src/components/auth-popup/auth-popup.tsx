@@ -1,20 +1,20 @@
 import { useState } from 'react';
 import classNames from 'classnames';
 
-// context
-import { useUserContext } from '../../providers/user/user.context';
-
-// styles
-import styles from './auth-popup.module.css';
+// components
 import Modal from '../modal/modal';
 import { Icon, avaliableIconsIds } from '../icon/icon';
 
-type Props = {
-  isOpen: boolean;
-  handleClose: () => void;
-};
+// context
+import { useUserContext } from '../../providers/user/user.context';
+import { useAppContext } from '../../providers/app/app.context';
 
-export const AuthPopup = ({ isOpen, handleClose }: Props) => {
+// styles
+import styles from './auth-popup.module.css';
+
+export const AuthPopup = () => {
+  const { isAuthPopupOpen: isOpen, closeAuthPopup: handleClose } = useAppContext();
+
   const { signInWithGoogle, signInWithCredentials, createUserWithCredentials } = useUserContext();
 
   const [isRegister, setIsRegister] = useState(false);
@@ -48,13 +48,22 @@ export const AuthPopup = ({ isOpen, handleClose }: Props) => {
     }
   };
 
+  const handleAuthViaGoogle = async () => {
+    try {
+      await signInWithGoogle();
+      handleClose();
+    } catch (error) {
+      console.error('authorization error', { error });
+    }
+  };
+
   return (
     <Modal isOpen={isOpen} onClose={handleClose} className={classNames(styles['auth-popup'])}>
       <div className={classNames(styles['auth-popup-body'])}>
         <div className={classNames(styles['title'])}>Вхід / Реєстрація</div>
 
         {/* Google sign in */}
-        <button className={classNames(styles['auth-google-btn'])} onClick={signInWithGoogle}>
+        <button className={classNames(styles['auth-google-btn'])} onClick={handleAuthViaGoogle}>
           <Icon id={avaliableIconsIds.GOOGLE_LOGO} /> Авторизуватись через Google
         </button>
 
