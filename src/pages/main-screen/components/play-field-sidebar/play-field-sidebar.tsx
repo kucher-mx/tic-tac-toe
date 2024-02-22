@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 
 // components
-import { Icon, avaliableIconsIds } from '../../../../components/icon/icon';
+import { Icon } from '../../../../components/icon/icon';
 import { Timer } from '../../../../components/timer/timer';
 import { AiLevelToggler } from '../ai-level-toggler/ai-level-toggler';
 
@@ -21,7 +21,7 @@ export const PlayFieldSidebar = () => {
       </div>
 
       <button className={classNames(styles.surrender)} onClick={surrender}>
-        <Icon id={avaliableIconsIds.SURRENDER} />
+        <Icon id={'surrender'} />
       </button>
 
       <div

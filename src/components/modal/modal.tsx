@@ -1,8 +1,5 @@
 import PureModal from 'react-pure-modal';
 
-// components
-import { Icon, avaliableIconsIds } from '../icon/icon';
-
 // styles
 import 'react-pure-modal/dist/react-pure-modal.min.css';
 
@@ -34,7 +31,6 @@ function Modal(props: PropsBaseModal): JSX.Element | null {
       onClose={onClose}
       width={width}
       className={className}
-      // closeButton={<Icon id={avaliableIconsIds.CLOSE_ICON} />}
       {...attrs}
     >
       {children}

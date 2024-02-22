@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 // components
 import Modal from '../modal/modal';
-import { Icon, avaliableIconsIds } from '../icon/icon';
+import { Icon } from '../icon/icon';
 
 // context
 import { useUserContext } from '../../providers/user/user.context';
@@ -64,7 +64,7 @@ export const AuthPopup = () => {
 
         {/* Google sign in */}
         <button className={classNames(styles['auth-google-btn'])} onClick={handleAuthViaGoogle}>
-          <Icon id={avaliableIconsIds.GOOGLE_LOGO} /> Авторизуватись через Google
+          <Icon id={'google-logo'} /> Авторизуватись через Google
         </button>
 
         <div className={styles['or-label']}>

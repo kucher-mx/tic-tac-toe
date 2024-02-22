@@ -1,16 +1,13 @@
-import * as IconNames from '../../shared/icons/names.js';
+// types
+import { IconSpritesIdsType } from '../../shared/icons/icons.types.js';
 
 // icons
-import spriteUrl from '../../shared/icons/sprite.svg';
+import spriteUrl from '../../shared/icons/sprites.svg';
 
-const avaliableIconsIds: typeof IconNames = IconNames;
-
-const Icon = ({ id }: { id: keyof typeof avaliableIconsIds }) => {
+export const Icon = ({ id }: { id: IconSpritesIdsType }) => {
   return (
     <svg>
       <use xlinkHref={`${spriteUrl}#${id}`} />
     </svg>
   );
 };
-
-export { avaliableIconsIds, Icon };
