@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useGameContext } from '../../../../providers/game/game.context';
 
 // components
-import { Icon, avaliableIconsIds } from '../../../../components/icon/icon';
+import { Icon } from '../../../../components/icon/icon';
 
 // conts
 import { CELL_EMPTY, CELL_X, CELL_O } from '../../../../providers/game/game.conts';
@@ -28,12 +28,12 @@ export const PlayField = () => {
           >
             {value === CELL_X && (
               <div className={classNames(styles['cell-value'])}>
-                <Icon id={avaliableIconsIds.X_ICON} />
+                <Icon id={'x-icon'} />
               </div>
             )}
             {value === CELL_O && (
               <div className={classNames(styles['cell-value'])}>
-                <Icon id={avaliableIconsIds.O_ICON} />
+                <Icon id={'zero-icon'} />
               </div>
             )}
           </button>
