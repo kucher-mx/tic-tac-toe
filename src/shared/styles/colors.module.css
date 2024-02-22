@@ -1,11 +1,35 @@
 html {
 	&[data-theme='dark'] {
-    color-scheme: dark;
+		--color-backgound: #f1faee;
+    --color-border: #1d3557;
+    --color-shadow-bg: #2d2d2dcc;
     
-		--color-backgound: #ff4;
+    --color-cell-hover: #fefae0;
+    --color-cell-value: #003049;
+
+    --color-surrender: #6c757d;
   }
 
   &[data-theme='light'] {
-    --color-backgound: #f6f;
+    --color-backgound: #f1faee;
+    --color-border: #1d3557;
+    --color-shadow-bg: #3b3b3bcc;
+
+    --color-cell-hover: #fefae0;
+    --color-cell-value: #003049;
+
+    --color-surrender: #6c757d;
   }
+
+  --color-red: #e63946;
+  --color-green: #57cc99;
+  --color-accent: #ffe566;
+  --color-backdrop: rgba(0, 0, 0, 0.15);
+  --color-gray-dark: #363636;
+  --color-gray-middle: #8e8e8e;
+  
+  /* TOASTER COLORS */
+  --color-gradient-success: linear-gradient(81.4deg, #b8fbd7 0%, #dbffbe 98.71%);
+  --color-gradient-error: linear-gradient(74.06deg, #fbdcb8 0%, #feffbe 115.59%);
+  --color-gradient-info: linear-gradient(236.63deg, #bff0ff 0%, #8bd5ff 92.41%);
 }

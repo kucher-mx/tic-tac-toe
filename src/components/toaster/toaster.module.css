@@ -1,0 +1,211 @@
+@value vars: "../../shared/styles/vars.module.css";
+@value tablet-min from vars;
+
+.toaster-wrap {
+  position: fixed;
+  top: 20px;
+  right: 12px;
+  z-index: 1041;
+  transform: var(--transform-menu);
+  transition: transform linear;
+  transition-duration: var(--transition-duration);
+
+  @media (max-width: tablet-min) {
+    transform: unset;
+    top: 5px;
+    right: 3px;
+    left: 3px;
+  }
+}
+
+.toaster-message {
+  min-height: 60px;
+  width: 370px;
+  box-sizing: border-box;
+  padding: 10px 22px 12px 38px;
+  font-size: 14px;
+  line-height: 18px;
+  position: relative;
+  color: var(--color-gray-dark);
+  border-radius: 5px;
+  box-shadow: 10px 10px 30px var(--color-backdrop);
+  animation-duration: 0.3s;
+  animation-name: appearance;
+  opacity: 0;
+  pointer-events: none;
+  margin: 0 auto;
+
+  &::before {
+    position: absolute;
+    top: 16px;
+    left: 8px;
+    margin-right: 8px;
+    font-size: 18px;
+    text-align: center;
+  }
+
+  &:first-child,
+  &:nth-child(2),
+  &:nth-child(3) {
+    opacity: 1;
+    pointer-events: auto;
+    cursor: pointer;
+  }
+
+  &:first-child {
+    z-index: 4;
+    transition: transform var(--toast-transition-duration) linear, width 0.2s linear;
+    transform: translateX(var(--transform-toast));
+  }
+
+  &:nth-child(2) {
+    width: 346px;
+    transform: translateY(calc(12px - 100%));
+    z-index: 3;
+  }
+
+  &:nth-child(3) {
+    width: 333px;
+    transform: translateY(calc(-36px - 100%));
+    z-index: 2;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &.toaster-open {
+    height: auto;
+
+    .toaster-body {
+      overflow: unset;
+      text-overflow: unset;
+      white-space: unset;
+    }
+  }
+
+	&.error,
+	&.warning {
+		background: var(--color-gradient-error);
+
+		&::before {
+			content: '🙅‍♂️';
+		}
+	}
+
+	&.success {
+		background: var(--color-gradient-success);
+
+		&::before {
+			content: '👍';
+		}
+	}
+
+	&.info {
+		background: var(--color-gradient-info);
+
+		&::before {
+			content: '☝️';
+		}
+	}
+
+	.toaster-close {
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: auto;
+		height: auto;
+		padding: 5px 10px;
+	
+		svg {
+			fill: var(--color-gray-dark);
+			margin-right: 0;
+		}
+	}
+
+	.toaster-header {
+		font-weight: 700;
+		line-height: 20px;
+	}
+	
+	.toaster-body {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	
+	.toaster-loader {
+		top: 10px;
+		right: 10px;
+		width: 14px;
+		height: 14px;
+		position: absolute;
+		clip: rect(auto, auto, auto, auto);
+	
+		--toaster-half-time-animation: unset;
+		--toaster-time-animation: unset;
+	
+		animation-duration: 0.01s;
+		animation-delay: var(--toaster-half-time-animation);
+		animation-name: close-wrapper;
+	
+		&::before, &::after {
+			content: '';
+			display: block;
+			width: 10px;
+			height: 10px;
+			border: 2px solid var(--color-gray-middle);
+			border-radius: 7px;
+			position: absolute;
+			clip: rect(0px, 7px, 14px, 0px);
+			animation-iteration-count: 1;
+			animation-fill-mode: forwards;
+			animation-timing-function: linear;
+		}
+	
+		&::before {
+			animation-duration: var(--toaster-half-time-animation);
+			animation-name: left-spin;
+			animation-delay: var(--toaster-half-time-animation);
+		}
+	
+		&::after {
+			animation-duration: var(--toaster-time-animation);
+			animation-name: right-spin;
+		}
+	}
+}
+
+@keyframes appearance {
+  from {
+    transform: translateX(110%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes right-spin {
+  from {
+    transform: rotate(-180deg);
+  }
+  to {
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes left-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes close-wrapper {
+  to {
+    clip: rect(0px, 7px, 14px, 0px);
+  }
+}
