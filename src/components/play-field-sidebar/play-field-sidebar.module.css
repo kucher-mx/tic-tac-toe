@@ -1,6 +1,7 @@
 .playFieldSidebar {
-	width: fit-content;
+	width: 100%;
 	min-width: 100px;
+	max-width: 250px;
 
 	position: absolute;
 	top: 25px;
@@ -10,7 +11,7 @@
 	align-items: center;
 	
 	grid-template-columns: 0.4fr 0.6fr;
-	row-gap: 6px;
+	row-gap: 12px;
 	column-gap: 12px;
 
 	padding: 6px 12px;
@@ -44,17 +45,17 @@
 	}
 
 	.current-turn {
-		width: max-content;
-		white-space: nowrap;
-
 		grid-column-start: 1;
 		grid-column-end: 3;
 		
-		font-size: 18px;
-		color: var(--color-green);
+		font-size: 16px;
 
-		&.is-opponent-turn {
+		&.red {
 			color: var(--color-red);
+		}
+
+		&.green {
+			color: var(--color-green);
 		}
 	}
 

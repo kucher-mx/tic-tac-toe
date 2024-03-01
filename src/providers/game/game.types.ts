@@ -19,6 +19,8 @@ export type GameStatusType =
   | typeof GAME_WON
   | typeof GAME_TIE;
 
+export type GameResultType = typeof GAME_LOST | typeof GAME_WON | typeof GAME_TIE;
+
 export type GameCellType = {
   id: number;
   value: CellsValueType;

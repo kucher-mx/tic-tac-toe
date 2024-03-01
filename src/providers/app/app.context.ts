@@ -11,6 +11,10 @@ export const appContext = React.createContext<AppContextType>({
   currentAiLevel: AI_EASY,
   toggleAiLevel: () => {},
 
+  // game result data
+  gameResultData: null,
+  setGameResultData: () => {},
+
   // auth popup
   isAuthPopupOpen: false,
   openAuthPopup: () => {},

@@ -62,8 +62,6 @@ type ReturnType = typeof GAME_IN_PROGRESS | typeof GAME_TIE | CellValueType;
  * @param cells game cells
  */
 export const checkForWin = ({ cells }: Args): ReturnType => {
-  if (!cells.find(({ value }) => value === CELL_EMPTY)) return GAME_TIE;
-
   const { winner } = WIN_CONDITIONS.reduce<{ winner: CellValueType | null }>(
     (acc, winCondition) => {
       const [cellOne, cellTwo, cellThree] = winCondition;
@@ -89,6 +87,8 @@ export const checkForWin = ({ cells }: Args): ReturnType => {
       winner: null,
     },
   );
+
+  if (!cells.find(({ value }) => value === CELL_EMPTY) && !winner) return GAME_TIE;
 
   return winner ?? GAME_IN_PROGRESS;
 };

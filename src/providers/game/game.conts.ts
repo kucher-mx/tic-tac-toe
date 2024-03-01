@@ -1,4 +1,5 @@
 // types
+import { AI_EASY, AI_MEDIUM, AI_HARD } from '../app/app.consts';
 import { GameCellType, GameStateType } from './game.types';
 
 const GAME_CELLS = 9;
@@ -29,3 +30,27 @@ export const INITIAL_GAME_STATE: GameStateType = {
   currentMoveIdx: 1,
   gameStatus: GAME_NOT_STARTED,
 };
+
+export const AI_LEVELS_EFFICIENT_MOVE_PERSENTAGES = {
+  [AI_EASY]: 0.33,
+  [AI_MEDIUM]: 0.66,
+  [AI_HARD]: 1,
+} as const;
+
+export const GAME_RESULT_POINTS_MAPPER = {
+  [AI_EASY]: {
+    [GAME_WON]: 1,
+    [GAME_LOST]: -1,
+    [GAME_TIE]: 0,
+  },
+  [AI_MEDIUM]: {
+    [GAME_WON]: 2,
+    [GAME_LOST]: -1,
+    [GAME_TIE]: 0,
+  },
+  [AI_HARD]: {
+    [GAME_WON]: 5,
+    [GAME_LOST]: -1,
+    [GAME_TIE]: 0,
+  },
+} as const;

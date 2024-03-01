@@ -1,13 +1,13 @@
 import classNames from 'classnames';
 
 // context
-import { useGameContext } from '../../../../providers/game/game.context';
+import { useGameContext } from '../../providers/game/game.context';
 
 // components
-import { Icon } from '../../../../components/icon/icon';
+import { Icon } from '../icon/icon';
 
 // conts
-import { CELL_EMPTY, CELL_X, CELL_O } from '../../../../providers/game/game.conts';
+import { CELL_EMPTY, CELL_X, CELL_O } from '../../providers/game/game.conts';
 
 // styles
 import styles from './play-field.module.css';
