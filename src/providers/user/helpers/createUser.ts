@@ -20,6 +20,7 @@ export const createUserInFirestore = async (
       nickname: userBody?.nickname || DEFAULT_USER.nickname,
       email: userBody?.email || DEFAULT_USER.email,
       rating: userBody?.rating || DEFAULT_USER.rating,
+      games: userBody?.games || DEFAULT_USER.games,
       id: userId,
     };
 

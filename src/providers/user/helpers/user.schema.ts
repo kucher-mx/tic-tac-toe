@@ -5,4 +5,5 @@ export const userSchema = z.object({
   nickname: z.string(),
   email: z.string(),
   rating: z.number(),
+  games: z.array(z.string()),
 });

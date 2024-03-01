@@ -1,7 +1,7 @@
 import React from 'react';
 
 // consts
-import { CELLS, CELL_O } from './game.conts';
+import { CELLS, CELL_O, GAME_NOT_STARTED } from './game.conts';
 
 // types
 import { GameContextType } from './game.types';
@@ -9,15 +9,17 @@ import { GameContextType } from './game.types';
 export const gameContext = React.createContext<GameContextType>({
   // game cells
   cells: CELLS,
-  updateCell: () => {},
+  makeMove: () => {},
 
   // game data
   playerSign: CELL_O,
-  currentTurn: CELL_O,
-  currentTurnEndsIn: 0,
+  currentMove: CELL_O,
+  currentMoveEndsIn: 0,
+  gameStatus: GAME_NOT_STARTED,
 
   // game methods
   surrender: () => {},
+  resetGameField: () => {},
 });
 
 export const useGameContext = () => {

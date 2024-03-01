@@ -1,15 +1,19 @@
 import classNames from 'classnames';
 
 // context
-import { useAppContext } from '../../../../providers/app/app.context';
+import { useAppContext } from '../../providers/app/app.context';
 
 // consts
-import { AI_LEVELS, AI_LEVELS_NAMES } from '../../../../providers/app/app.consts';
+import { AI_LEVELS, AI_LEVELS_NAMES } from '../../providers/app/app.consts';
 
 // styles
 import styles from './ai-level-toggler.module.css';
 
-export const AiLevelToggler = () => {
+type Props = {
+  disabled?: boolean;
+};
+
+export const AiLevelToggler = ({ disabled }: Props) => {
   const { currentAiLevel, toggleAiLevel } = useAppContext();
 
   return (
@@ -20,7 +24,7 @@ export const AiLevelToggler = () => {
         return (
           <button
             key={aiLevel}
-            disabled={isActive}
+            disabled={isActive || disabled}
             className={classNames(styles['toggle-btn'])}
             onClick={() => {
               console.log('clicl', aiLevel);

@@ -1,0 +1,31 @@
+.game-result-popup {
+	max-width: 426px !important;
+	width: 100% !important;
+}
+
+
+.game-result-body {
+	padding: 16px 16px 8px 16px;
+
+	.header {
+		.title {
+			margin-inline: auto;
+
+			width: fit-content;
+
+			font-size: 24px;
+		}
+	}
+
+	.content {
+		display: flex;
+		flex-direction: column;
+
+		margin-top: 24px;
+		row-gap: 12px;
+
+		div {
+			font-size: 18px;
+		}
+	}
+}

@@ -1,19 +1,20 @@
 import classNames from 'classnames';
 
 // context
-import { useGameContext } from '../../../../providers/game/game.context';
+import { useGameContext } from '../../providers/game/game.context';
 
 // components
-import { Icon } from '../../../../components/icon/icon';
+import { Icon } from '../icon/icon';
 
 // conts
-import { CELL_EMPTY, CELL_X, CELL_O } from '../../../../providers/game/game.conts';
+import { CELL_EMPTY, CELL_X, CELL_O } from '../../providers/game/game.conts';
 
 // styles
 import styles from './play-field.module.css';
 
 export const PlayField = () => {
-  const { cells, updateCell, currentTurn } = useGameContext();
+  const { cells, makeMove, playerSign } = useGameContext();
+
   return (
     <div className={classNames(styles.playField)}>
       {cells.map(({ value, id }) => {
@@ -24,7 +25,7 @@ export const PlayField = () => {
             key={id}
             disabled={!isEmpty}
             className={classNames(styles.cell)}
-            onClick={() => updateCell(id, currentTurn === CELL_X ? CELL_O : CELL_X)}
+            onClick={() => makeMove(id, playerSign)}
           >
             {value === CELL_X && (
               <div className={classNames(styles['cell-value'])}>

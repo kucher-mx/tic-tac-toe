@@ -5,4 +5,5 @@ export const DEFAULT_USER: UserSchemaType = {
   nickname: '',
   email: '',
   rating: 0,
+  games: [],
 };

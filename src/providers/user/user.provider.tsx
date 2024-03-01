@@ -15,10 +15,10 @@ import { UserContextType, UserSchemaType, UserType } from './user.types';
 import { firebaseAuth } from '../../shared/firebase';
 import { getUserFromFirestore } from './helpers/getUser';
 import { createUserInFirestore } from './helpers/createUser';
+import { updateUserInFirestore } from './helpers/updateUser';
 
 // context
 import { userContext } from './user.context';
-import { updateUserInFirestore } from './helpers/updateUser';
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<UserType>(null);
@@ -112,16 +112,23 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   // ------------------- OTHER USER METHODS
 
-  const updateUser = useCallback(async (userData: UserSchemaType) => {
-    try {
-      const userId = userData.id;
-      const { user } = await updateUserInFirestore(userId, userData);
+  const updateUser = useCallback(
+    async (userData: Partial<UserSchemaType>) => {
+      try {
+        if (!user) return;
 
-      return { user };
-    } catch (error) {
-      console.error('update user error', { error });
-    }
-  }, []);
+        const userId = user.id;
+        const { user: updatedUser } = await updateUserInFirestore(userId, { ...user, ...userData });
+
+        setUser(updatedUser);
+
+        return { user: updatedUser };
+      } catch (error) {
+        console.error('update user error', { error });
+      }
+    },
+    [user],
+  );
 
   const memoValue = useMemo<UserContextType>(
     () => ({
