@@ -26,10 +26,7 @@ export const AiLevelToggler = ({ disabled }: Props) => {
             key={aiLevel}
             disabled={isActive || disabled}
             className={classNames(styles['toggle-btn'], { [styles['active']]: isActive })}
-            onClick={() => {
-              console.log('clicl', aiLevel);
-              toggleAiLevel(aiLevel);
-            }}
+            onClick={() => toggleAiLevel(aiLevel)}
           >
             {AI_LEVELS_NAMES[aiLevel]}
           </button>
