@@ -13,7 +13,7 @@ import { CELL_EMPTY, CELL_X, CELL_O } from '../../providers/game/game.conts';
 import styles from './play-field.module.css';
 
 export const PlayField = () => {
-  const { cells, makeMove, playerSign } = useGameContext();
+  const { cells, makeMove } = useGameContext();
 
   return (
     <div className={classNames(styles.playField)}>
@@ -25,7 +25,7 @@ export const PlayField = () => {
             key={id}
             disabled={!isEmpty}
             className={classNames(styles.cell)}
-            onClick={() => makeMove(id, playerSign)}
+            onClick={() => makeMove(id, CELL_O)}
           >
             {value === CELL_X && (
               <div className={classNames(styles['cell-value'])}>

@@ -12,7 +12,6 @@ export const gameContext = React.createContext<GameContextType>({
   makeMove: () => {},
 
   // game data
-  playerSign: CELL_O,
   currentMove: CELL_O,
   currentMoveEndsIn: 0,
   gameStatus: GAME_NOT_STARTED,

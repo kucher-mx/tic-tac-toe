@@ -1,10 +1,33 @@
 .mainScreen {
-	min-width: 100vw;
-	min-height: 100vh;
-
 	display: flex;
 	justify-content: center;
-	align-items: center;
+
+	min-height: calc(100vh - 60px);
+	padding-top: 60px;
 
 	background-color: var(--color-backgound);
+
+	.content {
+		display: grid;
+		grid-template-rows: auto auto;
+		grid-template-columns: minmax(90%, 600px);
+		align-items: center;
+
+		height: fit-content;
+		row-gap: 12px;
+		padding: 8px 12px 24px 12px;
+
+		grid-template-areas:
+				"game-menu"
+				"game-field";
+		
+		
+		.game-menu {
+			grid-area: game-menu;
+		}
+
+		.game-field {
+			grid-area: game-field;
+		}
+	}
 }

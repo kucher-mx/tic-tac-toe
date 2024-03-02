@@ -11,17 +11,36 @@
 		align-items: center;
 		justify-content: center;
 
+		color: var(--color-dark);
 		font-size: 16px;
 		
 		transition: opacity 250ms;
 
 		&:disabled {
-			opacity: 0.6;
+			opacity: 0.8;
+			color: var(--color-gray-dark);
 			cursor: not-allowed;
 		}
 
-		&:hover {
-			opacity: 0.8;
+		&.active {
+			color: var(--color-dark);
+			text-decoration: underline;
+		}
+	}
+}
+
+[data-theme='dark'] {
+	.ai-level-toggler {
+		.toggle-btn {
+			color: var(--color-light);
+
+			&:disabled {
+				color: var(--color-gray-light);
+			}
+
+			&.active {
+				color: var(--color-light);
+			}
 		}
 	}
 }

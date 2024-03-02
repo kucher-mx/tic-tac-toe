@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 
 // components
-import { AppSidebar } from '../../components/app-sidebar/app-sidebar';
+import { AppSidebar } from '../../components/header/header';
 
 // styles
 import styles from './profile.module.css';

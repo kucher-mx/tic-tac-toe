@@ -1,0 +1,80 @@
+@value vars: "../../shared/styles/vars.module.css";
+@value phone from vars;
+
+.playFieldSidebar {
+	width: 100%;
+
+	display: grid;
+	align-items: center;
+
+	column-gap: 16px;
+	row-gap: 8px;
+
+	grid-template-columns: auto auto;
+	grid-template-rows: max-content auto;
+	grid-template-areas: 
+				"ai-level timer"
+				"turn-hint turn-hint";
+
+	&.in-progress {
+		grid-template-rows: max-content;
+		grid-template-areas: "ai-level timer";
+
+		.turn-hint {
+			display: none;
+		}
+	}
+
+	.timer {
+		grid-area: timer;
+
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		column-gap: 16px;
+
+		color: var(--color-dark);
+
+		.surrender {
+			transition: opacity 250ms;
+			background-color: transparent;
+	
+			svg {
+				width: 25px;
+				height: 20px;
+				fill: var(--color-surrender);
+			}
+	
+			&:hover {
+				opacity: 0.8;
+			}
+		}
+	}
+
+	.turn-hint {
+		grid-area: turn-hint;
+		
+		text-align: center;
+		color: var(--color-gray-middle);
+		white-space: nowrap;
+		font-size: 14px;
+
+		@media (max-width: phone) {
+			font-size: 12px;
+		}
+	}
+
+	.ai-level-toggler-wrapper {
+		grid-area: ai-level;
+
+		padding-left: 4px;
+	}
+}
+
+[data-theme='dark'] {
+	.playFieldSidebar {
+		.timer {
+			color: var(--color-light)
+		}
+	}
+}

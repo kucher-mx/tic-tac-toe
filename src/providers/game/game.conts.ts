@@ -1,5 +1,7 @@
-// types
+// consts
 import { AI_EASY, AI_MEDIUM, AI_HARD } from '../app/app.consts';
+
+// types
 import { GameCellType, GameStateType } from './game.types';
 
 const GAME_CELLS = 9;
@@ -24,7 +26,6 @@ export const GAME_LOST = 'lost';
 export const GAME_TIE = 'tie';
 
 export const INITIAL_GAME_STATE: GameStateType = {
-  playerSign: CELL_O,
   currentMove: CELL_O,
   currentMoveEndsIn: 0,
   currentMoveIdx: 1,
