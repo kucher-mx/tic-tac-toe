@@ -14,9 +14,9 @@
 	grid-template-columns: repeat(3, 1fr);
 	grid-template-rows: repeat(3, 1fr);
 
-	-webkit-box-shadow: 4px 4px 16px 0px var(--color-border);
-	-moz-box-shadow: 4px 4px 16px 0px var(--color-border);
-	box-shadow: 4px 4px 16px 0px var(--color-border);
+	-webkit-box-shadow: 0 0 10px var(--color-dark);
+	-moz-box-shadow: 0 0 10px var(--color-dark);
+	box-shadow: 0 0 10px var(--color-dark);
 
 	.cell {
 		cursor: pointer;
@@ -32,7 +32,7 @@
 			background-color: var(--color-cell-hover);
 		}
 		
-		border: 1px solid var(--color-border);
+		border: 1px solid var(--color-dark);
 
 		&:nth-child(-n + 3) {
 			border-top: none;
@@ -58,8 +58,29 @@
 			svg {
 				width: 50%;
 				height: 50%;
+				aspect-ratio: 1;
 
-				stroke: var(--color-cell-value);
+				stroke: var(--color-dark);
+			}
+		}
+	}
+}
+
+[data-theme='dark'] {
+	.playField {
+		-webkit-box-shadow: 0 0 10px var(--color-light);
+		-moz-box-shadow: 0 0 10px var(--color-light);
+		box-shadow: 0 0 10px var(--color-light);
+
+		.cell {
+			
+
+			border-color: var(--color-border);
+
+			.cell-value {
+				svg {
+					stroke: var(--color-light);
+				}
 			}
 		}
 	}

@@ -1,35 +1,41 @@
 html {
-	&[data-theme='dark'] {
-		--color-backgound: #f1faee;
-    --color-border: #1d3557;
-    --color-shadow-bg: #2d2d2dcc;
-    
-    --color-cell-hover: #fefae0;
-    --color-cell-value: #003049;
-
-    --color-surrender: #6c757d;
-  }
-
-  &[data-theme='light'] {
-    --color-backgound: #f1faee;
-    --color-border: #1d3557;
-    --color-shadow-bg: #3b3b3bcc;
-
-    --color-cell-hover: #fefae0;
-    --color-cell-value: #003049;
-
-    --color-surrender: #6c757d;
-  }
-
+  /* COLORS SAME ON EVERY THEME */
   --color-red: #e63946;
   --color-green: #57cc99;
   --color-accent: #ffe566;
   --color-backdrop: rgba(0, 0, 0, 0.15);
+
+  --color-dark: #1c1c1e;
+  --color-dark-black: #010101;
+  --color-light: #f8f9fa;
+  --color-light-white: #f8f9fa;
+
   --color-gray-dark: #363636;
   --color-gray-middle: #8e8e8e;
+  --color-gray-light: #d2d1d1;
   
   /* TOASTER COLORS */
   --color-gradient-success: linear-gradient(81.4deg, #b8fbd7 0%, #dbffbe 98.71%);
   --color-gradient-error: linear-gradient(74.06deg, #fbdcb8 0%, #feffbe 115.59%);
   --color-gradient-info: linear-gradient(236.63deg, #bff0ff 0%, #8bd5ff 92.41%);
+
+  /* DARK THEME COLORS */
+	&[data-theme='dark'] {
+		--color-backgound: var(--color-dark-black);
+    --color-border: #495057;
+    --color-shadow-bg: #2d2d2dcc;
+    
+    --color-cell-hover: #1e201e;
+    --color-surrender: #6c757d;
+  }
+
+  /* LIGHT THEME COLORS */
+  &[data-theme='light'] {
+    --color-backgound: var(--color-light-white);
+    --color-border: #495057;
+    --color-shadow-bg: #3b3b3bcc;
+
+    --color-cell-hover: #e8ebee;
+    --color-surrender: #6c757d;
+  }
 }

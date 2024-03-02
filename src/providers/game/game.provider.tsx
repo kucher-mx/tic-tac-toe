@@ -74,11 +74,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   const resetGameField = useCallback(() => {
     setGameCells(CELLS);
 
-    setGameState(prev => ({
-      ...prev,
-      currentMove: prev.playerSign,
-      currentMoveEndsIn: 0,
-    }));
+    setGameState(INITIAL_GAME_STATE);
   }, []);
 
   /**
@@ -133,7 +129,6 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
         checkingWinnerResult: gameFinishStatus,
         playerSign: gameState.playerSign,
       });
-      console.log({ updatedCells, gameFinishStatus, gameStatus });
 
       if (gameStatus !== GAME_IN_PROGRESS && gameStatus !== GAME_NOT_STARTED) {
         onGameEnd({ gameResult: gameStatus });
