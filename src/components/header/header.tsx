@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, useMatch, useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 
@@ -21,11 +22,15 @@ export const AppSidebar = () => {
   const navigate = useNavigate();
 
   const isMainPage = useMatch(MAIN_PAGE_ROUTE);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
 
     if (!isMainPage) navigate(MAIN_PAGE_ROUTE);
+  };
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(prev => !prev);
   };
 
   return (
@@ -35,25 +40,81 @@ export const AppSidebar = () => {
           Tic Tac Toe
         </Link>
 
+        <div className={styles['menu-gamburger']} onClick={toggleMobileMenu}>
+          <div />
+          <div />
+          <div />
+        </div>
+
         {Boolean(user) ? (
           <>
-            <Link to={'/profile'}>Профіль</Link>
-            <Link to={'/rating'}>Рейтинг</Link>
-            <button className={classNames(styles['app-auth-btn'])} onClick={handleLogout}>
+            <Link to={'/profile'} className={styles['menu-item']}>
+              Профіль
+            </Link>
+            <Link to={'/rating'} className={styles['menu-item']}>
+              Рейтинг
+            </Link>
+            <button
+              className={classNames(styles['menu-item'], styles['app-auth-btn'])}
+              onClick={handleLogout}
+            >
               Вийти
             </button>
           </>
         ) : (
           <>
-            <button className={classNames(styles['app-auth-btn'])} onClick={openAuthPopup}>
+            <button
+              className={classNames(styles['menu-item'], styles['app-auth-btn'])}
+              onClick={openAuthPopup}
+            >
               Авторизуватися
             </button>
           </>
         )}
 
-        <button className={classNames(styles['toggle-theme'])} onClick={toggleTheme}>
+        <button
+          className={classNames(styles['menu-item'], styles['toggle-theme'])}
+          onClick={toggleTheme}
+        >
           {theme === LIGHT_THEME ? 'Світла тема' : 'Темна тема'}
         </button>
+
+        <div
+          className={classNames(styles['mobile-menu'], { [styles['is-open']]: isMobileMenuOpen })}
+        >
+          {Boolean(user) ? (
+            <>
+              <Link to={'/profile'} className={styles['menu-item']}>
+                Профіль
+              </Link>
+              <Link to={'/rating'} className={styles['menu-item']}>
+                Рейтинг
+              </Link>
+              <button
+                className={classNames(styles['menu-item'], styles['app-auth-btn'])}
+                onClick={handleLogout}
+              >
+                Вийти
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                className={classNames(styles['menu-item'], styles['app-auth-btn'])}
+                onClick={openAuthPopup}
+              >
+                Авторизуватися
+              </button>
+            </>
+          )}
+
+          <button
+            className={classNames(styles['menu-item'], styles['toggle-theme'])}
+            onClick={toggleTheme}
+          >
+            {theme === LIGHT_THEME ? 'Світла тема' : 'Темна тема'}
+          </button>
+        </div>
       </div>
     </div>
   );

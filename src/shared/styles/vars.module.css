@@ -1,6 +1,7 @@
 @value system-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 
-@value tablet-min: 768px;
+@value tablet: 768px;
+@value tablet-min: 600px;
 @value phone: 450px;
 
 html {

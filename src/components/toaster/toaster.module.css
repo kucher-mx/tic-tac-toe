@@ -1,5 +1,5 @@
 @value vars: "../../shared/styles/vars.module.css";
-@value tablet-min from vars;
+@value tablet from vars;
 
 .toaster-wrap {
   position: fixed;
@@ -10,7 +10,7 @@
   transition: transform linear;
   transition-duration: var(--transition-duration);
 
-  @media (max-width: tablet-min) {
+  @media (max-width: tablet) {
     transform: unset;
     top: 5px;
     right: 3px;
