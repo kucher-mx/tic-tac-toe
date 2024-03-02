@@ -1,1 +1,1 @@
-export const getMoveTimerTime = () => new Date(Number(Date.now()) + 60 * 1000).getTime();
+export const getMoveTimerTime = () => new Date(Number(Date.now()) + 30 * 1000).getTime();

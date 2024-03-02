@@ -50,7 +50,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
    */
   useEffect(() => {
     const moveTimeout = setTimeout(() => {
-      if (gameState.playerSign === gameState.currentMove) return;
+      if (CELL_O === gameState.currentMove) return;
 
       const aiMoveId = getAiBestMove({ cells: gameCells, aiLevel: currentAiLevel });
 
@@ -63,7 +63,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       makeMove(aiMoveId, gameState.currentMove);
-    }, 0);
+    }, 750);
 
     return () => clearTimeout(moveTimeout);
   }, [gameState.currentMove]);
@@ -127,7 +127,6 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
       const gameFinishStatus = checkForWin({ cells: updatedCells });
       const gameStatus = getGameStatus({
         checkingWinnerResult: gameFinishStatus,
-        playerSign: gameState.playerSign,
       });
 
       if (gameStatus !== GAME_IN_PROGRESS && gameStatus !== GAME_NOT_STARTED) {
@@ -148,7 +147,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
         };
       });
     },
-    [gameCells, gameState.currentMoveIdx, gameState.playerSign, onGameEnd],
+    [gameCells, gameState.currentMoveIdx, onGameEnd],
   );
 
   /**
@@ -167,7 +166,6 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
       makeMove,
 
       // game data
-      playerSign: gameState.playerSign,
       currentMove: gameState.currentMove,
       currentMoveEndsIn: isGameStarted ? gameState.currentMoveEndsIn : 0,
       gameStatus: gameState.gameStatus,
@@ -179,7 +177,6 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   }, [
     gameCells,
     makeMove,
-    gameState.playerSign,
     gameState.currentMove,
     gameState.currentMoveEndsIn,
     gameState.gameStatus,

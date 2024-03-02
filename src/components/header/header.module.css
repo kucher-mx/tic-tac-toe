@@ -60,9 +60,24 @@
 		row-gap: 4px;
 
 		div {
+			transition: transform 300ms;
 			width: 24px;
 			height: 2px;
 			background-color: var(--color-light)
+		}
+
+		&.mobile-active {
+			div:nth-child(1) {
+				transform: rotate(45deg) translate(30%, 55%);
+			}
+
+			div:nth-child(2) {
+				opacity: 0;
+			}
+
+			div:nth-child(3) {
+				transform: rotate(-45deg) translate(30%, -50%);
+			}
 		}
 	}
 

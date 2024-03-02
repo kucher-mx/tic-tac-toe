@@ -24,13 +24,18 @@ export const AppSidebar = () => {
   const isMainPage = useMatch(MAIN_PAGE_ROUTE);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const toggleMobileMenu = () => setIsMobileMenuOpen(prev => !prev);
+  const handleCloseMobileMenu = () => setIsMobileMenuOpen(false);
+
   const handleLogout = () => {
     logout();
 
     if (!isMainPage) navigate(MAIN_PAGE_ROUTE);
   };
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(prev => !prev);
+
+  const handleOpenAuthPopup = () => {
+    setIsMobileMenuOpen(false);
+    openAuthPopup();
   };
 
   return (
@@ -40,7 +45,12 @@ export const AppSidebar = () => {
           Tic Tac Toe
         </Link>
 
-        <div className={styles['menu-gamburger']} onClick={toggleMobileMenu}>
+        <div
+          className={classNames(styles['menu-gamburger'], {
+            [styles['mobile-active']]: isMobileMenuOpen,
+          })}
+          onClick={toggleMobileMenu}
+        >
           <div />
           <div />
           <div />
@@ -84,10 +94,10 @@ export const AppSidebar = () => {
         >
           {Boolean(user) ? (
             <>
-              <Link to={'/profile'} className={styles['menu-item']}>
+              <Link to={'/profile'} className={styles['menu-item']} onClick={handleCloseMobileMenu}>
                 Профіль
               </Link>
-              <Link to={'/rating'} className={styles['menu-item']}>
+              <Link to={'/rating'} className={styles['menu-item']} onClick={handleCloseMobileMenu}>
                 Рейтинг
               </Link>
               <button
@@ -101,7 +111,7 @@ export const AppSidebar = () => {
             <>
               <button
                 className={classNames(styles['menu-item'], styles['app-auth-btn'])}
-                onClick={openAuthPopup}
+                onClick={handleOpenAuthPopup}
               >
                 Авторизуватися
               </button>

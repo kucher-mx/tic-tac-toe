@@ -29,7 +29,6 @@ export type GameCellType = {
   col: number;
 };
 export type GameStateType = {
-  playerSign: CellValueType;
   currentMove: CellValueType;
   currentMoveEndsIn: number;
   currentMoveIdx: number;
@@ -42,7 +41,6 @@ export type GameContextType = {
   makeMove: (id: number, value: CellsValueType) => void;
 
   // game data
-  playerSign: GameStateType['playerSign'];
   currentMove: GameStateType['currentMove'];
   currentMoveEndsIn: GameStateType['currentMoveEndsIn'];
   gameStatus: GameStatusType;
