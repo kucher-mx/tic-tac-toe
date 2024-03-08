@@ -12,6 +12,10 @@ import { LoadingFullScreen } from '../loaders/loading-full-screen';
 import { ToasterMessages } from '../toaster/toaster-popup';
 import { AuthPopup } from '../auth-popup/auth-popup';
 import { useToasterContext } from '../../providers/toaster/toaster.context';
+import { AppSidebar } from '../header/header';
+
+// styles
+import styles from '../../shared/styles/reset.module.css';
 
 type Props = { children: React.ReactNode };
 
@@ -34,11 +38,11 @@ export const AppWrapper = ({ children }: Props) => {
   // }, []);
 
   return (
-    <>
+    <main className={styles.main}>
       <ToasterMessages />
       <AuthPopup />
       {isLoading ? <LoadingFullScreen /> : null}
       {children}
-    </>
+    </main>
   );
 };

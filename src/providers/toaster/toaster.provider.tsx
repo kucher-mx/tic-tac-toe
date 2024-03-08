@@ -15,7 +15,6 @@ export const ToasterProvider = ({ children }: Props) => {
 
   const addToasterMessage = useCallback(
     (message: string, header: string, type: ToasterTypes): void => {
-      console.log({ message, type });
       setMessages(prev => [
         ...prev,
         {

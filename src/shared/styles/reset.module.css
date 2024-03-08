@@ -64,3 +64,10 @@ button {
 body {
 	font-family: system-font;
 }
+
+.main {
+	display: flex;
+	flex-direction: column;
+
+	position: relative;
+}

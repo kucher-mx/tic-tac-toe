@@ -1,14 +1,171 @@
+@value vars: "../../shared/styles/vars.module.css";
+@value phone from vars;
+
 .profile-page {
 	min-width: 100vw;
 	min-height: 100vh;
 
 	display: flex;
-	justify-content: center;
+	flex-direction: column;
+
 	align-items: center;
 
-	background-color: var(--color-backgound);
+	padding: 16px;
+	padding-top: 76px;
+	row-gap: 24px;
 
-	.profile-page-content {
+	background-color: var(--color-backgound);
+	box-sizing: border-box;
+
+	.user-data-form {
+		display: grid;
+
+		width: 100%;
+		height: 100%;
+		max-width: clamp(250px, 100%, 550px);
+
+		margin-inline: auto;
+
+		padding: 16px;
+
+		box-sizing: border-box;
+
+		align-items: center;
+
+		grid-template-columns: auto minmax(0, 300px);
+		grid-template-rows: 50px 50px;
+
+		grid-template-areas: 
+				"user-name placement"
+				"rating save-user-btn";
 		
+		gap: 12px;
+
+		border: 1px solid var(--color-border);
+
+		@media (max-width: phone) {
+			padding: 30px 16px 16px 16px;
+
+			grid-template-rows: unset;
+			grid-template-columns: 1fr;
+			grid-template-areas: 
+				"user-name"
+				"rating"
+				"placement"
+				"save-user-btn";
+
+			.user-name {
+				input {
+					width: 100%;
+				}
+			}
+		}
+
+		.user-name {
+			grid-area: user-name;
+			
+			position: relative;
+
+			input {
+				box-sizing: border-box;
+				outline: none;
+				padding: 4px 12px;
+
+				color: var(--color-dark);
+				font-size: 16px;
+
+				background: transparent;
+
+				border: 1px solid var(--color-border);
+				border-radius: 4px;
+
+				&::placeholder {
+					color: var(--color-dark);
+					font-size: 16px;
+				}
+			}
+
+			label {
+				position: absolute;
+				top: -14px;
+				left: 0px;
+				
+				color: var(--color-dark);
+				font-size: 12px;
+			}
+		}
+
+		.rating {
+			grid-area: rating;
+
+			font-size: 14px;
+			color: var(--color-dark);
+
+			b {
+				font-weight: 700;
+			}
+		}
+
+		.placement {
+			grid-area: placement;
+
+			font-size: 14px;
+			color: var(--color-dark);
+
+			b {
+				font-weight: 700;
+			}
+		}
+
+		.save-user-btn {
+			grid-area: save-user-btn;
+
+			width: 100%;
+			height: 50px;
+
+			font-weight: 600;
+			color: var(--color-dark);
+
+			cursor: pointer;
+			background-color: var(--color-accent);
+			border: 1px solid var(--color-border);
+
+			&:disabled {
+				opacity: 0.6;
+				cursor: not-allowed;
+			}
+		}
+	}
+}
+
+[data-theme='dark'] {
+	.profile-page {
+		.user-data-form {
+			.user-name {
+				input {
+					color: var(--color-light);
+	
+					&::placeholder {
+						color: var(--color-light);
+					}
+				}
+	
+				label {
+					color: var(--color-light);
+				}
+			}
+	
+			.rating {
+				color: var(--color-light);
+			}
+	
+			.placement {
+				color: var(--color-light);
+			}
+	
+			.save-user-btn {
+	
+			}
+		}
 	}
 }
