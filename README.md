@@ -1,5 +1,5 @@
 # tic-tac-toe
-Tic Tac Toe versus AI povered on minMax algorithm
+Tic Tac Toe versus AI powered by minMax algorithm
 
 ## Available Scripts
 
