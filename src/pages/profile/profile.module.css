@@ -88,10 +88,10 @@
 			label {
 				position: absolute;
 				top: -14px;
-				left: 0px;
+				left: 4px;
 				
 				color: var(--color-dark);
-				font-size: 12px;
+				font-size: 10px;
 			}
 		}
 
@@ -136,6 +136,15 @@
 			}
 		}
 	}
+
+	.games-history-title {
+		text-align: center;
+		color: var(--color-dark);
+		font-size: 24px;
+		font-weight: 700;
+
+		margin-top: 24px;
+	}
 }
 
 [data-theme='dark'] {
@@ -166,6 +175,10 @@
 			.save-user-btn {
 	
 			}
+		}
+
+		.games-history-title {
+			color: var(--color-light);
 		}
 	}
 }

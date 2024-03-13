@@ -14,7 +14,7 @@ import styles from './play-field.module.css';
 import { useEffect, useState } from 'react';
 
 export const PlayField = () => {
-  const { cells, makeMove, gameStatus } = useGameContext();
+  const { cells, makeMove, gameStatus, currentMove } = useGameContext();
 
   const [showGameMessage, setShowGameMessage] = useState(false);
 
@@ -35,7 +35,7 @@ export const PlayField = () => {
         return (
           <button
             key={id}
-            disabled={!isEmpty}
+            disabled={!isEmpty || currentMove !== CELL_O}
             className={classNames(styles.cell)}
             onClick={() => makeMove(id, CELL_O)}
           >

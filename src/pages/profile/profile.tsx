@@ -19,6 +19,7 @@ import { getUserPlaceFromFirestore } from '../../providers/user/helpers/getUserR
 
 // styles
 import styles from './profile.module.css';
+import { GamesSlider } from './components/games-slider/games-slider';
 
 export const ProfileScreen = () => {
   const { user, updateUser } = useUserContext();
@@ -101,6 +102,9 @@ export const ProfileScreen = () => {
           Зберегти дані
         </button>
       </form>
+
+      <div className={classNames(styles['games-history-title'])}>Історія ігор</div>
+      <GamesSlider />
     </div>
   );
 };

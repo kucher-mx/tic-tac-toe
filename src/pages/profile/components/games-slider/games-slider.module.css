@@ -1,0 +1,28 @@
+.games-slider-wrapper {
+	max-width: 650px;
+	width: 90%;
+
+	.slider-viewport {
+		overflow: hidden;
+
+		.slider-container {
+			display: flex;
+			column-gap: 16px;
+
+			backface-visibility: hidden;
+
+			.slide {
+				color: #fff;
+				white-space: nowrap;
+
+				&.won {
+					color: var(--color-green);
+				}
+
+				&.lost {
+					color: var(--color-red);
+				}
+			}
+		}
+	}
+}

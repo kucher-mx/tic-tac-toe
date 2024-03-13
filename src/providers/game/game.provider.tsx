@@ -10,6 +10,7 @@ import {
   GAME_LOST,
   GAME_NOT_STARTED,
   GAME_RESULT_POINTS_MAPPER,
+  GAME_WON,
   INITIAL_GAME_STATE,
 } from './game.conts';
 
@@ -42,8 +43,6 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
 
   const [gameCells, setGameCells] = useState<GameCellType[]>(CELLS);
   const [gameState, setGameState] = useState<GameStateType>(INITIAL_GAME_STATE);
-
-  const gameId = useRef(String(Math.random().toString(36).slice(2)));
 
   /**
    * effect to perofm an ai move, will run every time currentMove changes (so every move)
@@ -91,13 +90,23 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
 
         resetGameField();
 
-        const savedGame = await saveGameDoc({ gameId: gameId.current, gameData: gameCells });
-        const updatedUser = await updateUser({
-          rating: Number(user?.rating) + gamePoints,
-          games: [...(user?.games ?? []), gameId.current],
-        });
+        // update user and save game only if user is logged in
+        if (user !== null) {
+          const gameId = String(Math.random().toString(36).slice(2));
+          const savedGame = await saveGameDoc({
+            gameId,
+            gameData: gameCells,
+            aiLevel: currentAiLevel,
+            gamePoints,
+            winner: gameResult === GAME_WON ? CELL_O : gameResult === GAME_LOST ? CELL_X : null,
+          });
+          const updatedUser = await updateUser({
+            rating: Number(user?.rating) + gamePoints,
+            games: [...(user?.games ?? []), gameId],
+          });
 
-        return { savedGame, updatedUser };
+          return { savedGame, updatedUser };
+        }
       } catch (error) {
         console.error('save game error', { error });
       }
