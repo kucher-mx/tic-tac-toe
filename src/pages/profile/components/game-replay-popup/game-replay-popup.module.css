@@ -20,9 +20,19 @@
 		display: flex;
 
 		.move-btn {
-			
-			&.prev {
+			svg {
+				width: 24px;
 
+				fill: var(--color-dark);
+			}
+
+			&:disabled {
+				cursor: not-allowed;
+				opacity: 0.6;
+			}
+
+			&.prev {
+				
 			}
 
 			&.next {
@@ -107,23 +117,21 @@
 				backdrop-filter: blur(3px);
 				cursor: pointer;
 	
-				opacity: 0.9;
+				opacity: 1;
 				visibility: visible;
 	
 				display: flex;
 				justify-content: center;
 				align-items: center;
 	
-				color: var(--color-dark);
-				text-align: center;
-				font-size: 18px;
-				font-weight: 700;
-	
 				box-sizing: border-box;
 				transition: opacity 450ms ease-in-out, visibility 450ms ease-in-out;
 
-				span {
-					text-shadow: 4px 4px 4px rgb(250, 250, 250);
+				svg {
+					width: 48px;
+					height: 48px;
+
+					opacity: 0.6;
 				}
 	
 				&.is-replay-started {

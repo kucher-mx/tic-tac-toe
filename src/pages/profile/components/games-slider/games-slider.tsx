@@ -24,16 +24,22 @@ export const GamesSlider = () => {
   const [gameToReplay, setGameToReplay] = useState<null | GameFullType>(null);
   const [replayMoveIdx, setReplayMoveIdx] = useState<null | number>(null);
 
+  // Start replay (show game 1st move)
   const startReplay = useCallback(() => {
     setReplayMoveIdx(1);
   }, []);
+
+  // Increase replay move
   const replayNextMove = useCallback(() => {
     setReplayMoveIdx(prev => Math.min(Number(prev) + 1, 9));
   }, []);
+
+  // Descrease replay move
   const replayPrevMove = useCallback(() => {
     setReplayMoveIdx(prev => Math.max(Number(prev) - 1, 1));
   }, []);
 
+  // Close popup, reset game and move idx
   const closeReplayPopup = useCallback(() => {
     setGameToReplay(null);
     setReplayMoveIdx(null);
@@ -41,6 +47,9 @@ export const GamesSlider = () => {
 
   const [emblaRef, emblaApi] = useEmblaCarousel(SLIDER_OPTIONS);
 
+  /**
+   * effect to load games
+   */
   useEffect(() => {
     if (!user) return;
 
@@ -69,8 +78,11 @@ export const GamesSlider = () => {
         <div ref={emblaRef} className={styles['slider-viewport']}>
           <div className={styles['slider-container']}>
             {games?.map(game => {
-              const isWon = game.winner === CELL_O;
-              const isLost = game.winner === CELL_X;
+              const { winner, gamePoints } = game;
+              const isWon = winner === CELL_O;
+              const isLost = winner === CELL_X;
+
+              const pointsWord = Math.abs(gamePoints) === 1 ? 'очко' : 'очок';
 
               return (
                 <div
@@ -82,9 +94,7 @@ export const GamesSlider = () => {
                   onClick={() => setGameToReplay(game)}
                 >
                   <span>{isWon ? 'Перемога' : isLost ? 'Програш' : 'Нічия'}</span>{' '}
-                  <span>{`${game.gamePoints > 0 ? '+' : game.gamePoints < 0 ? '-' : ''}${
-                    game.gamePoints
-                  } очок`}</span>
+                  <span>{`${gamePoints > 0 ? '+' : ''}${gamePoints} ${pointsWord}`}</span>
                 </div>
               );
             })}

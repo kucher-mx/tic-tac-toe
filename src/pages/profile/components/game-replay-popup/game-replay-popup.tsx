@@ -26,11 +26,16 @@ export const GameReplayPopup = ({
 }: Props) => {
   const isOpen = selectedGame !== null;
 
-  const isReplayStarted = currentMoveIdx !== null;
-  const isOnFirstMove = currentMoveIdx === 0;
-  const isOnLastMove = currentMoveIdx === 9;
+  const gameMaxMoveIdx = selectedGame?.cells?.reduce((acc, { turnIdx }) => {
+    if (acc < turnIdx) return turnIdx;
+    return acc;
+  }, 0);
 
-  console.log({ selectedGame, isReplayStarted, currentMoveIdx });
+  const isReplayStarted = currentMoveIdx !== null;
+  const isOnFirstMove = currentMoveIdx === 1;
+  const isOnLastMove = currentMoveIdx === gameMaxMoveIdx;
+
+  console.log({ selectedGame, isReplayStarted, currentMoveIdx, gameMaxMoveIdx });
 
   return (
     <Modal isOpen={isOpen} onClose={handleClose} className={styles['replay-popup']}>
@@ -42,12 +47,12 @@ export const GameReplayPopup = ({
             disabled={isOnFirstMove}
             onClick={prevMove}
           >
-            prev
+            <Icon id="arrow-left" />
           </button>
 
           <div className={styles['game-field']}>
             {selectedGame?.cells?.map(({ value, id, turnIdx }) => {
-              const isIgnoreValue = isReplayStarted && turnIdx >= currentMoveIdx;
+              const isIgnoreValue = isReplayStarted && turnIdx > currentMoveIdx;
 
               return (
                 <div key={id} className={styles['cell']}>
@@ -71,7 +76,7 @@ export const GameReplayPopup = ({
                 [styles['is-replay-started']]: isReplayStarted,
               })}
             >
-              <span>Натисніть, щоб переглянути гру покроково</span>
+              <Icon id="replay" />
             </div>
           </div>
 
@@ -80,7 +85,7 @@ export const GameReplayPopup = ({
             disabled={isOnLastMove}
             onClick={nextMove}
           >
-            next
+            <Icon id="arrow-right" />
           </button>
         </div>
       </div>
