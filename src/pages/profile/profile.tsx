@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import classNames from 'classnames';
 
 // components
-import { AppSidebar } from '../../components/header/header';
+import { GamesSlider } from './components/games-slider/games-slider';
 
 // context
 import { useUserContext } from '../../providers/user/user.context';
@@ -19,7 +19,6 @@ import { getUserPlaceFromFirestore } from '../../providers/user/helpers/getUserR
 
 // styles
 import styles from './profile.module.css';
-import { GamesSlider } from './components/games-slider/games-slider';
 
 export const ProfileScreen = () => {
   const { user, updateUser } = useUserContext();
@@ -73,8 +72,6 @@ export const ProfileScreen = () => {
 
   return (
     <div className={classNames(styles['profile-page'])}>
-      <AppSidebar />
-
       <form onSubmit={handleUpdateUser} className={classNames(styles['user-data-form'])}>
         <div className={classNames(styles.input, styles['user-name'])}>
           <label htmlFor="nickname">Нікнейм</label>

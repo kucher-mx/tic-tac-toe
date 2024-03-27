@@ -3,7 +3,6 @@ import classNames from 'classnames';
 // components
 import { PlayField } from '../../components/play-field/play-field';
 import { PlayFieldSidebar } from '../../components/play-field-menu/play-field-menu';
-import { AppSidebar } from '../../components/header/header';
 import { GameResultPopup } from '../../components/game-result-popup/game-result-popup';
 
 // styles
@@ -22,7 +21,6 @@ export const MainScreen = () => {
         </div>
       </div>
 
-      <AppSidebar />
       <GameResultPopup />
     </div>
   );

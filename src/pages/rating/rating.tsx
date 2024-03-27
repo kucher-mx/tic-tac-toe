@@ -1,23 +1,64 @@
 import classNames from 'classnames';
+import { useLocation, useNavigate } from 'react-router';
 
 // components
-import { AppSidebar } from '../../components/header/header';
+import { Icon } from '../../components/icon/icon';
 
 // helpers
 import { useRating } from './hooks/use-rating';
 
+// consts
+import { RATING_ITEMS_PER_PAGE } from './helpers/rating.consts';
+
 // styles
 import styles from './rating.module.css';
 
-type Props = {};
+export const RatingScreen = () => {
+  const { search } = useLocation();
+  const navigate = useNavigate();
+  const page = Number(new URLSearchParams(search).get('page')) ?? 1;
 
-export const RatingScreen = ({}: Props) => {
-  const { rating } = useRating({ page: 1 });
+  const { ratingItems, ratingTotalItems } = useRating({ page });
+
+  const totalPages = Math.ceil(ratingTotalItems / RATING_ITEMS_PER_PAGE);
+
   return (
     <div className={classNames(styles['rating-page'])}>
-      <AppSidebar />
-      <div className={styles['rating-list']}></div>
-      cooming soon...
+      <div className={styles['container']}>
+        <div className={styles['rating-list']}>
+          {ratingItems.map(({ id, nickname, rating: userRating }, idx) => (
+            <div key={id} className={styles['rating-item']}>
+              <div className={styles['user-place']}>{idx + 1}</div>
+              <div className={styles['user-name']}>{nickname}</div>
+              <div className={styles['user-rating']}>{userRating} очок</div>
+            </div>
+          ))}
+        </div>
+
+        <div className={styles['pagination']}>
+          <button
+            disabled={page === 1}
+            onClick={() => {
+              navigate(`/rating?page=${page - 1}`);
+            }}
+          >
+            <Icon id="arrow-left" />
+          </button>
+
+          <div className={styles['current-page']}>
+            {page} / {totalPages}
+          </div>
+
+          <button
+            disabled={page === totalPages}
+            onClick={() => {
+              navigate(`/rating?page=${page + 1}`);
+            }}
+          >
+            <Icon id="arrow-right" />
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
