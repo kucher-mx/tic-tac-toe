@@ -26,13 +26,17 @@ export const RatingScreen = () => {
     <div className={classNames(styles['rating-page'])}>
       <div className={styles['container']}>
         <div className={styles['rating-list']}>
-          {ratingItems.map(({ id, nickname, rating: userRating }, idx) => (
-            <div key={id} className={styles['rating-item']}>
-              <div className={styles['user-place']}>{idx + 1}</div>
-              <div className={styles['user-name']}>{nickname}</div>
-              <div className={styles['user-rating']}>{userRating} очок</div>
-            </div>
-          ))}
+          {ratingItems.map(({ id, nickname, rating: userRating }, idx) => {
+            const userIdx = idx + 1 + (page - 1) * RATING_ITEMS_PER_PAGE;
+
+            return (
+              <div key={id} className={styles['rating-item']}>
+                <div className={styles['user-place']}>{userIdx}</div>
+                <div className={styles['user-name']}>{nickname}</div>
+                <div className={styles['user-rating']}>{userRating} очок</div>
+              </div>
+            );
+          })}
         </div>
 
         <div className={styles['pagination']}>

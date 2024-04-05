@@ -1,4 +1,11 @@
-import { query, collection, where, orderBy, getDocs } from 'firebase/firestore';
+import {
+  query,
+  collection,
+  where,
+  orderBy,
+  count,
+  getAggregateFromServer,
+} from 'firebase/firestore';
 
 // helpers
 import { firestore } from '../../../shared/firebase';
@@ -19,10 +26,11 @@ export const getUserPlaceFromFirestore = async (userId: string) => {
       where('rating', '>=', user.rating),
     );
 
-    const querySnapshot = await getDocs(firebaseQuery);
+    const querySnapshot = await getAggregateFromServer(firebaseQuery, {
+      itemsCount: count(),
+    });
 
-    // TODO: optimize this?? do not load all users, get only placement
-    const userPlace = querySnapshot.size;
+    const userPlace = querySnapshot.data().itemsCount;
 
     return userPlace;
   } catch (error) {

@@ -1,1 +1,1 @@
-export const RATING_ITEMS_PER_PAGE = 2;
+export const RATING_ITEMS_PER_PAGE = 12;
