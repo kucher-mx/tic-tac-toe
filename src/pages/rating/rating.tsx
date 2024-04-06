@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router';
 
 // components
 import { Icon } from '../../components/icon/icon';
+import { Plural } from '../../components/plural/plural';
 
 // helpers
 import { useRating } from './hooks/use-rating';
@@ -33,7 +34,10 @@ export const RatingScreen = () => {
               <div key={id} className={styles['rating-item']}>
                 <div className={styles['user-place']}>{userIdx}</div>
                 <div className={styles['user-name']}>{nickname}</div>
-                <div className={styles['user-rating']}>{userRating} очок</div>
+                <div className={styles['user-rating']}>
+                  {userRating}&#8239;
+                  <Plural count={userRating} many="очок" one="очко" other="очок" few="очки" />
+                </div>
               </div>
             );
           })}

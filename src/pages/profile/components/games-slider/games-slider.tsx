@@ -1,14 +1,26 @@
 import { useCallback, useEffect, useState } from 'react';
-import { GameFullType, GamesFullType } from '../../../../providers/game/game.types';
-import { useUserContext } from '../../../../providers/user/user.context';
-import { loadUserGamesFromFirestore } from '../../../../providers/user/helpers/load-user-games';
-import useEmblaCarousel from 'embla-carousel-react';
-import type { EmblaOptionsType } from 'embla-carousel';
-
-import styles from './games-slider.module.css';
-import { CELL_O, CELL_X } from '../../../../providers/game/game.conts';
 import classNames from 'classnames';
+import useEmblaCarousel from 'embla-carousel-react';
+
+// types
+import type { EmblaOptionsType } from 'embla-carousel';
+import { GameFullType, GamesFullType } from '../../../../providers/game/game.types';
+
+// helpers
+import { loadUserGamesFromFirestore } from '../../../../providers/user/helpers/load-user-games';
+
+// context
+import { useUserContext } from '../../../../providers/user/user.context';
+
+// components
+import { Plural } from '../../../../components/plural/plural';
 import { GameReplayPopup } from '../game-replay-popup/game-replay-popup';
+
+// consts
+import { CELL_O, CELL_X } from '../../../../providers/game/game.conts';
+
+// styles
+import styles from './games-slider.module.css';
 
 const SLIDER_OPTIONS: Partial<EmblaOptionsType> = {
   align: 'start',
@@ -82,8 +94,6 @@ export const GamesSlider = () => {
               const isWon = winner === CELL_O;
               const isLost = winner === CELL_X;
 
-              const pointsWord = Math.abs(gamePoints) === 1 ? 'очко' : 'очок';
-
               return (
                 <div
                   key={game.id}
@@ -94,7 +104,11 @@ export const GamesSlider = () => {
                   onClick={() => setGameToReplay(game)}
                 >
                   <span>{isWon ? 'Перемога' : isLost ? 'Програш' : 'Нічия'}</span>{' '}
-                  <span>{`${gamePoints > 0 ? '+' : ''}${gamePoints} ${pointsWord}`}</span>
+                  <span>
+                    {gamePoints >= 0 ? '+' : '–'}&#8239;{Math.abs(gamePoints)}
+                    &#8239;
+                    <Plural count={gamePoints} many="очок" one="очко" other="очок" few="очки" />
+                  </span>
                 </div>
               );
             })}

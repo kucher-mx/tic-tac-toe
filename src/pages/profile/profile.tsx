@@ -3,6 +3,7 @@ import classNames from 'classnames';
 
 // components
 import { GamesSlider } from './components/games-slider/games-slider';
+import { Plural } from '../../components/plural/plural';
 
 // context
 import { useUserContext } from '../../providers/user/user.context';
@@ -85,7 +86,11 @@ export const ProfileScreen = () => {
           />
         </div>
         <div className={classNames(styles['rating'])}>
-          Рейтинг: <b>{editableUser.rating} очок</b>
+          Рейтинг:{' '}
+          <b>
+            {editableUser.rating}&#8239;
+            <Plural count={editableUser.rating} many="очок" one="очко" other="очок" few="очки" />
+          </b>
         </div>
         <div className={classNames(styles['placement'])}>
           Місце у рейтингу: <b>#{userPlace}</b>
