@@ -61,10 +61,6 @@ export const PlayFieldSidebar = () => {
           <Icon id={'surrender'} />
         </button>
       </div>
-
-      <div className={classNames(styles['turn-hint'])}>
-        Натисніть на будь-яку клітинку, щоб розпочати гру
-      </div>
     </div>
   );
 };

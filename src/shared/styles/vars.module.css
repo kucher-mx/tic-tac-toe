@@ -3,6 +3,7 @@
 @value tablet: 768px;
 @value tablet-min: 600px;
 @value phone: 450px;
+@value phone-max: 550px;
 
 html {
 	--transform-menu: translateY(0);

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 // consts
 import {
@@ -10,6 +10,7 @@ import {
   GAME_LOST,
   GAME_NOT_STARTED,
   GAME_RESULT_POINTS_MAPPER,
+  GAME_WON,
   INITIAL_GAME_STATE,
 } from './game.conts';
 
@@ -42,8 +43,6 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
 
   const [gameCells, setGameCells] = useState<GameCellType[]>(CELLS);
   const [gameState, setGameState] = useState<GameStateType>(INITIAL_GAME_STATE);
-
-  const gameId = useRef(String(Math.random().toString(36).slice(2)));
 
   /**
    * effect to perofm an ai move, will run every time currentMove changes (so every move)
@@ -81,7 +80,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
    * method to save game
    */
   const onGameEnd = useCallback(
-    async ({ gameResult }: { gameResult: GameResultType }) => {
+    async ({ gameResult, cells }: { gameResult: GameResultType; cells: GameCellType[] }) => {
       try {
         const gamePoints = GAME_RESULT_POINTS_MAPPER[currentAiLevel][gameResult];
 
@@ -91,26 +90,28 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
 
         resetGameField();
 
-        const savedGame = await saveGameDoc({ gameId: gameId.current, gameData: gameCells });
-        const updatedUser = await updateUser({
-          rating: Number(user?.rating) + gamePoints,
-          games: [...(user?.games ?? []), gameId.current],
-        });
+        // update user and save game only if user is logged in
+        if (user !== null) {
+          const gameId = String(Math.random().toString(36).slice(2));
+          const savedGame = await saveGameDoc({
+            gameId,
+            gameData: cells,
+            aiLevel: currentAiLevel,
+            gamePoints,
+            winner: gameResult === GAME_WON ? CELL_O : gameResult === GAME_LOST ? CELL_X : null,
+          });
+          const updatedUser = await updateUser({
+            rating: Number(user?.rating) + gamePoints,
+            games: [...(user?.games ?? []), gameId],
+          });
 
-        return { savedGame, updatedUser };
+          return { savedGame, updatedUser };
+        }
       } catch (error) {
         console.error('save game error', { error });
       }
     },
-    [
-      currentAiLevel,
-      gameCells,
-      resetGameField,
-      setGameResultData,
-      updateUser,
-      user?.games,
-      user?.rating,
-    ],
+    [currentAiLevel, resetGameField, setGameResultData, updateUser, user?.games, user?.rating],
   );
 
   /**
@@ -130,7 +131,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
       });
 
       if (gameStatus !== GAME_IN_PROGRESS && gameStatus !== GAME_NOT_STARTED) {
-        onGameEnd({ gameResult: gameStatus });
+        onGameEnd({ gameResult: gameStatus, cells: updatedCells });
 
         return;
       }
@@ -142,7 +143,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
           ...prev,
           currentMove,
           currentMoveEndsIn: getMoveTimerTime(),
-          currentMoveIdx: prev.currentMoveIdx++,
+          currentMoveIdx: prev.currentMoveIdx + 1,
           gameStatus,
         };
       });
@@ -154,8 +155,8 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
    * method to surrender the game
    */
   const surrender = useCallback(() => {
-    onGameEnd({ gameResult: GAME_LOST });
-  }, [onGameEnd]);
+    onGameEnd({ gameResult: GAME_LOST, cells: gameCells });
+  }, [onGameEnd, gameCells]);
 
   const memoValue = useMemo<GameContextType>(() => {
     const isGameStarted = gameCells.some(({ value }) => value !== CELL_EMPTY);

@@ -11,19 +11,8 @@
 	row-gap: 8px;
 
 	grid-template-columns: auto auto;
-	grid-template-rows: max-content auto;
-	grid-template-areas: 
-				"ai-level timer"
-				"turn-hint turn-hint";
-
-	&.in-progress {
-		grid-template-rows: max-content;
-		grid-template-areas: "ai-level timer";
-
-		.turn-hint {
-			display: none;
-		}
-	}
+	grid-template-rows: max-content;
+	grid-template-areas: "ai-level timer";
 
 	.timer {
 		grid-area: timer;

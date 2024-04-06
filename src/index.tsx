@@ -11,7 +11,6 @@ import { GameProvider } from './providers/game/game.provider';
 import { UserProvider } from './providers/user/user.provider';
 import { AppProvider } from './providers/app/app.provider';
 import { ToasterProvider } from './providers/toaster/toaster.provider';
-import { AppWrapper } from './components/app-wrapper/app-wrapper';
 
 // styles
 import './shared/styles/colors.module.css';
@@ -27,9 +26,7 @@ root.render(
         <UserProvider>
           <ThemeProvider>
             <GameProvider>
-              <AppWrapper>
-                <RouterProvider router={router} />
-              </AppWrapper>
+              <RouterProvider router={router} />
             </GameProvider>
           </ThemeProvider>
         </UserProvider>

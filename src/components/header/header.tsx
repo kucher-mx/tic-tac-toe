@@ -61,7 +61,7 @@ export const AppSidebar = () => {
             <Link to={'/profile'} className={styles['menu-item']}>
               Профіль
             </Link>
-            <Link to={'/rating'} className={styles['menu-item']}>
+            <Link to={'/rating?page=1'} className={styles['menu-item']}>
               Рейтинг
             </Link>
             <button

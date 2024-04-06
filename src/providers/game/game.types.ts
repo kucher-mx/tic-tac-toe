@@ -1,3 +1,4 @@
+import { z } from 'zod';
 import {
   CELL_X,
   CELL_O,
@@ -8,6 +9,7 @@ import {
   GAME_NOT_STARTED,
   GAME_TIE,
 } from './game.conts';
+import { gameSchema, gamesSchema } from './game.schema';
 
 export type CellsValueType = typeof CELL_X | typeof CELL_O | typeof CELL_EMPTY;
 export type CellValueType = typeof CELL_X | typeof CELL_O;
@@ -49,3 +51,6 @@ export type GameContextType = {
   surrender: () => void;
   resetGameField: () => void;
 };
+
+export type GameFullType = z.infer<typeof gameSchema>;
+export type GamesFullType = z.infer<typeof gamesSchema>;
