@@ -45,8 +45,8 @@ export const GAME_RESULT_POINTS_MAPPER = {
     [GAME_TIE]: 0,
   },
   [AI_MEDIUM]: {
-    [GAME_WON]: 2,
-    [GAME_LOST]: -1,
+    [GAME_WON]: 3,
+    [GAME_LOST]: -2,
     [GAME_TIE]: 0,
   },
   [AI_HARD]: {
