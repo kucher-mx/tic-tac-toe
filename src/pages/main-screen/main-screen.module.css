@@ -14,8 +14,8 @@
 		align-items: center;
 
 		height: fit-content;
-		row-gap: 12px;
-		padding: 8px 12px 24px 12px;
+		row-gap: 16px;
+		padding: 16px 12px 24px 12px;
 
 		grid-template-areas:
 				"game-menu"

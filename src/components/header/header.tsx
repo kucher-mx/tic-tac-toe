@@ -13,6 +13,7 @@ import { MAIN_PAGE_ROUTE } from '../../shared/consts/routes';
 
 // styles
 import styles from './header.module.css';
+import { ThemeToggler } from '../theme-toggler/theme-toggler';
 
 export const AppSidebar = () => {
   const { user, logout } = useUserContext();
@@ -81,13 +82,14 @@ export const AppSidebar = () => {
             </button>
           </>
         )}
-
+        {/* 
         <button
           className={classNames(styles['menu-item'], styles['toggle-theme'])}
           onClick={toggleTheme}
         >
           {theme === LIGHT_THEME ? 'Світла тема' : 'Темна тема'}
-        </button>
+        </button> */}
+        <ThemeToggler />
 
         <div
           className={classNames(styles['mobile-menu'], { [styles['is-open']]: isMobileMenuOpen })}
