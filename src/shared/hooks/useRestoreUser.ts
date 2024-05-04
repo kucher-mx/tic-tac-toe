@@ -6,11 +6,14 @@ import { getUserFromFirestore } from '../../providers/user/helpers/getUser';
 export const useRestoreUser = () => {
   const { setUserState } = useUserContext();
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     firebaseAuth.onAuthStateChanged(user => {
-      if (!user) return;
+      if (!user) {
+        setIsLoading(false);
+        return;
+      }
 
       setIsLoading(true);
       getUserFromFirestore(user.uid)

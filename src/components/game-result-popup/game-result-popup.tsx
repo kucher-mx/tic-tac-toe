@@ -59,7 +59,7 @@ export const GameResultPopup = () => {
           {user ? (
             <>
               <div className={styles['new-rating']}>
-                Ваш новий рейтинг: <b>{user.rating + gamePoints}</b>
+                Ваш новий рейтинг: <b>{user.rating}</b>
               </div>
               <div className={styles['game-points']}>
                 Результат гри:{' '}

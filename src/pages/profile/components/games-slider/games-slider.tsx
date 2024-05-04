@@ -21,6 +21,8 @@ import { CELL_O, CELL_X } from '../../../../providers/game/game.conts';
 
 // styles
 import styles from './games-slider.module.css';
+import { PrevButton, NextButton, usePrevNextButtons } from './components/arrows';
+import { useDotButton, DotButton } from './components/dots';
 
 const SLIDER_OPTIONS: Partial<EmblaOptionsType> = {
   align: 'start',
@@ -58,6 +60,11 @@ export const GamesSlider = () => {
   }, []);
 
   const [emblaRef, emblaApi] = useEmblaCarousel(SLIDER_OPTIONS);
+
+  const { prevBtnDisabled, nextBtnDisabled, onPrevButtonClick, onNextButtonClick } =
+    usePrevNextButtons(emblaApi);
+
+  const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(emblaApi);
 
   /**
    * effect to load games
@@ -112,6 +119,25 @@ export const GamesSlider = () => {
                 </div>
               );
             })}
+          </div>
+        </div>
+
+        <div className={styles['embla__controls']}>
+          <div className={styles['embla__buttons']}>
+            <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
+            <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
+          </div>
+
+          <div className={styles['embla__dots']}>
+            {scrollSnaps.map((_, index) => (
+              <DotButton
+                key={index}
+                onClick={() => onDotButtonClick(index)}
+                className={classNames(styles['embla__dot'], {
+                  [styles['embla__dot--selected']]: index === selectedIndex,
+                })}
+              />
+            ))}
           </div>
         </div>
       </div>

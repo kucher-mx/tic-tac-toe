@@ -1,3 +1,4 @@
+import React from 'react';
 import classNames from 'classnames';
 
 // context
@@ -8,7 +9,6 @@ import { AI_LEVELS, AI_LEVELS_NAMES } from '../../providers/app/app.consts';
 
 // styles
 import styles from './ai-level-toggler.module.css';
-import React from 'react';
 
 type Props = {
   disabled?: boolean;
@@ -20,7 +20,6 @@ export const AiLevelToggler = ({ disabled }: Props) => {
   return (
     <div className={classNames(styles['ai-level-toggler'])}>
       {AI_LEVELS.map(aiLevel => {
-        console.log({ aiLevel });
         return (
           <React.Fragment key={aiLevel}>
             <input
@@ -36,20 +35,7 @@ export const AiLevelToggler = ({ disabled }: Props) => {
             </label>
           </React.Fragment>
         );
-
-        // return (
-        //   <button
-        //     key={aiLevel}
-        //     disabled={isActive || disabled}
-        //     className={classNames(styles['toggle-btn'], { [styles['active']]: isActive })}
-        //     onClick={() => toggleAiLevel(aiLevel)}
-        //   >
-
-        //   </button>
-        // );
       })}
-
-      {/* <span className={styles['glider']} /> */}
     </div>
   );
 };

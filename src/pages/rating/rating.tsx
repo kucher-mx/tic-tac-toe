@@ -13,18 +13,27 @@ import { RATING_ITEMS_PER_PAGE } from './helpers/rating.consts';
 
 // styles
 import styles from './rating.module.css';
+import { Loader } from '../../components/loader/loader';
 
 export const RatingScreen = () => {
   const { search } = useLocation();
   const navigate = useNavigate();
   const page = Number(new URLSearchParams(search).get('page')) ?? 1;
 
-  const { ratingItems, ratingTotalItems } = useRating({ page });
+  const { ratingItems, ratingTotalItems, isLoading } = useRating({ page });
 
   const totalPages = Math.ceil(ratingTotalItems / RATING_ITEMS_PER_PAGE);
 
   return (
     <div className={classNames(styles['rating-page'])}>
+      <div
+        className={classNames(styles['loader-wrapper'], {
+          [styles['active']]: isLoading,
+        })}
+      >
+        <Loader />
+      </div>
+
       <div className={styles['container']}>
         <div className={styles['rating-list']}>
           {ratingItems.map(({ id, nickname, rating: userRating }, idx) => {

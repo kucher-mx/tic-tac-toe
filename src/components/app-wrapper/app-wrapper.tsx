@@ -4,7 +4,7 @@ import { Outlet } from 'react-router';
 import { useRestoreUser } from '../../shared/hooks/useRestoreUser';
 
 // components
-import { LoadingFullScreen } from '../loaders/loading-full-screen';
+import { LoadingFullScreen } from '../loader-full-screen/loading-full-screen';
 import { ToasterMessages } from '../toaster/toaster-popup';
 import { AuthPopup } from '../auth-popup/auth-popup';
 import { AppSidebar } from '../header/header';
@@ -20,7 +20,7 @@ export const AppWrapper = () => {
       <AppSidebar />
       <ToasterMessages />
       <AuthPopup />
-      {isLoading ? <LoadingFullScreen /> : null}
+      <LoadingFullScreen isActive={isLoading} />
 
       <Outlet />
     </main>

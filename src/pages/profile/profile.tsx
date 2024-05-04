@@ -20,6 +20,7 @@ import { getUserPlaceFromFirestore } from '../../providers/user/helpers/getUserR
 
 // styles
 import styles from './profile.module.css';
+import { Loader } from '../../components/loader/loader';
 
 export const ProfileScreen = () => {
   const { user, updateUser } = useUserContext();
@@ -27,7 +28,7 @@ export const ProfileScreen = () => {
 
   const [editableUser, setEditableUser] = useState<UserSchemaType>(DEFAULT_USER);
   const [userPlace, setUserPlace] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     void (async () => {
@@ -73,6 +74,14 @@ export const ProfileScreen = () => {
 
   return (
     <div className={classNames(styles['profile-page'])}>
+      <div
+        className={classNames(styles['loader-wrapper'], {
+          [styles['active']]: isLoading,
+        })}
+      >
+        <Loader />
+      </div>
+
       <form onSubmit={handleUpdateUser} className={classNames(styles['user-data-form'])}>
         <div className={classNames(styles.input, styles['user-name'])}>
           <label htmlFor="nickname">Нікнейм</label>

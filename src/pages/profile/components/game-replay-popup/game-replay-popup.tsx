@@ -35,8 +35,6 @@ export const GameReplayPopup = ({
   const isOnFirstMove = currentMoveIdx === 1;
   const isOnLastMove = currentMoveIdx === gameMaxMoveIdx;
 
-  console.log({ selectedGame, isReplayStarted, currentMoveIdx, gameMaxMoveIdx });
-
   return (
     <Modal isOpen={isOpen} onClose={handleClose} className={styles['replay-popup']}>
       <div className={styles['game-replay-popup-wrapper']}>
