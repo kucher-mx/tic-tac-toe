@@ -21,8 +21,10 @@ import { getUserPlaceFromFirestore } from '../../providers/user/helpers/getUserR
 // styles
 import styles from './profile.module.css';
 import { Loader } from '../../components/loader/loader';
+import { useAppContext } from '../../providers/app/app.context';
 
 export const ProfileScreen = () => {
+  const { shouldUseTimer, setShouldUseTimer } = useAppContext();
   const { user, updateUser } = useUserContext();
   const { success } = useToasterContext();
 
@@ -82,37 +84,56 @@ export const ProfileScreen = () => {
         <Loader />
       </div>
 
-      <form onSubmit={handleUpdateUser} className={classNames(styles['user-data-form'])}>
-        <div className={classNames(styles.input, styles['user-name'])}>
-          <label htmlFor="nickname">Нікнейм</label>
-          <input
-            id="nickname"
-            name="nickname"
-            value={editableUser.nickname}
-            onChange={handleNameChange}
-            placeholder="..."
-            required
-          />
-        </div>
-        <div className={classNames(styles['rating'])}>
-          Рейтинг:{' '}
-          <b>
-            {editableUser.rating}&#8239;
-            <Plural count={editableUser.rating} many="очок" one="очко" other="очок" few="очки" />
-          </b>
-        </div>
-        <div className={classNames(styles['placement'])}>
-          Місце у рейтингу: <b>#{userPlace}</b>
-        </div>
+      <div className={styles['user-data']}>
+        <form onSubmit={handleUpdateUser} className={classNames(styles['user-data-form'])}>
+          <div className={classNames(styles.input, styles['user-name'])}>
+            <label htmlFor="nickname">Нікнейм</label>
+            <input
+              id="nickname"
+              name="nickname"
+              value={editableUser.nickname}
+              onChange={handleNameChange}
+              placeholder="..."
+              required
+            />
+          </div>
+          <div className={classNames(styles['rating'])}>
+            Рейтинг:{' '}
+            <b>
+              {editableUser.rating}&#8239;
+              <Plural count={editableUser.rating} many="очок" one="очко" other="очок" few="очки" />
+            </b>
+          </div>
+          <div className={classNames(styles['placement'])}>
+            Місце у рейтингу: <b>#{userPlace}</b>
+          </div>
 
-        <button
-          type="submit"
-          className={classNames(styles['save-user-btn'])}
-          disabled={isSaveUserDisabled}
-        >
-          Зберегти дані
-        </button>
-      </form>
+          <button
+            type="submit"
+            className={classNames(styles['save-user-btn'])}
+            disabled={isSaveUserDisabled}
+          >
+            Зберегти дані
+          </button>
+        </form>
+
+        <div className={styles['divider']}></div>
+
+        <div className={styles['bottom-wrapper']}>
+          <div className={styles['use-timer']}>
+            <label htmlFor="useTimer">
+              <input
+                type="checkbox"
+                name="useTimer"
+                id="useTimer"
+                checked={shouldUseTimer}
+                onChange={() => setShouldUseTimer(!shouldUseTimer)}
+              />{' '}
+              Використовувати таймер ходу (30с)
+            </label>
+          </div>
+        </div>
+      </div>
 
       <div className={classNames(styles['games-history-title'])}>Історія ігор</div>
       <GamesSlider />

@@ -8,6 +8,7 @@ import { AiLevelToggler } from '../ai-level-toggler/ai-level-toggler';
 // context
 import { useToasterContext } from '../../providers/toaster/toaster.context';
 import { useGameContext } from '../../providers/game/game.context';
+import { useAppContext } from '../../providers/app/app.context';
 
 // consts
 import { CELL_EMPTY, GAME_IN_PROGRESS } from '../../providers/game/game.conts';
@@ -16,6 +17,7 @@ import { CELL_EMPTY, GAME_IN_PROGRESS } from '../../providers/game/game.conts';
 import styles from './play-field-menu.module.css';
 
 export const PlayFieldSidebar = () => {
+  const { shouldUseTimer } = useAppContext();
   const { bug } = useToasterContext();
   const { gameStatus, currentMoveEndsIn, surrender, makeMove, cells, currentMove } =
     useGameContext();
@@ -45,13 +47,15 @@ export const PlayFieldSidebar = () => {
       </div>
 
       <div className={classNames(styles['timer'])}>
-        <Timer
-          deadline={currentMoveEndsIn}
-          onEnd={handleRandomMove}
-          redTimer={5 * 1000}
-          showMinutes
-          showSeconds
-        />
+        {shouldUseTimer ? (
+          <Timer
+            deadline={currentMoveEndsIn}
+            onEnd={handleRandomMove}
+            redTimer={5 * 1000}
+            showMinutes
+            showSeconds
+          />
+        ) : null}
 
         <button
           className={classNames(styles['surrender'])}

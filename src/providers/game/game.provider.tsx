@@ -37,7 +37,7 @@ import {
 } from './game.types';
 
 export const GameProvider = ({ children }: { children: React.ReactNode }) => {
-  const { currentAiLevel, setGameResultData } = useAppContext();
+  const { currentAiLevel, setGameResultData, shouldUseTimer } = useAppContext();
   const { bug } = useToasterContext();
   const { updateUser, user } = useUserContext();
 
@@ -48,7 +48,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
    * effect to perofm an ai move, will run every time currentMove changes (so every move)
    */
   useEffect(() => {
-    const moveTimeout = setTimeout(() => {
+    const doMove = () => {
       if (CELL_O === gameState.currentMove) return;
 
       const aiMoveId = getAiBestMove({ cells: gameCells, aiLevel: currentAiLevel });
@@ -62,6 +62,10 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       makeMove(aiMoveId, gameState.currentMove);
+    };
+
+    const moveTimeout = setTimeout(() => {
+      doMove();
     }, 750);
 
     return () => clearTimeout(moveTimeout);

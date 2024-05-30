@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 // context
 import { appContext } from './app.context';
@@ -13,6 +13,14 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [aiLevel, setAiLevel] = useState<AiLevelType>(AI_EASY);
   const [gameResultData, setGameResultData] = useState<GameResultDataType>(null);
   const [isAuthPopupOpen, setIsAuthPopupOpen] = useState(false);
+  const [shouldUseTimer, setShouldUseTimer] = useState(true);
+
+  useEffect(() => {
+    const storedUseTimer = localStorage.getItem('shouldUseTimer');
+
+    if (storedUseTimer === 'true') setShouldUseTimer(true);
+    if (storedUseTimer === 'false') setShouldUseTimer(false);
+  }, []);
 
   const memoValue = useMemo<AppContextType>(
     () => ({
@@ -24,12 +32,18 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
       gameResultData,
       setGameResultData: (data: GameResultDataType) => setGameResultData(data),
 
+      shouldUseTimer,
+      setShouldUseTimer: (newValue: boolean) => {
+        localStorage.setItem('shouldUseTimer', String(newValue));
+        setShouldUseTimer(newValue);
+      },
+
       // auth popup
       isAuthPopupOpen,
       openAuthPopup: () => setIsAuthPopupOpen(true),
       closeAuthPopup: () => setIsAuthPopupOpen(false),
     }),
-    [aiLevel, gameResultData, isAuthPopupOpen],
+    [aiLevel, gameResultData, isAuthPopupOpen, shouldUseTimer],
   );
   return <appContext.Provider value={memoValue}>{children}</appContext.Provider>;
 };

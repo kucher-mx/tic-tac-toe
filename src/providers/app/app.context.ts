@@ -15,6 +15,9 @@ export const appContext = React.createContext<AppContextType>({
   gameResultData: null,
   setGameResultData: () => {},
 
+  shouldUseTimer: true,
+  setShouldUseTimer: () => {},
+
   // auth popup
   isAuthPopupOpen: false,
   openAuthPopup: () => {},

@@ -19,6 +19,10 @@ export type AppContextType = {
   gameResultData: GameResultDataType;
   setGameResultData: (data: GameResultDataType) => void;
 
+  // useTimer
+  shouldUseTimer: boolean;
+  setShouldUseTimer: (value: boolean) => void;
+
   // auth popup
   isAuthPopupOpen: boolean;
   openAuthPopup: () => void;
