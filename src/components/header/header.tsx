@@ -99,7 +99,11 @@ export const AppSidebar = () => {
               <Link to={'/profile'} className={styles['menu-item']} onClick={handleCloseMobileMenu}>
                 Профіль
               </Link>
-              <Link to={'/rating'} className={styles['menu-item']} onClick={handleCloseMobileMenu}>
+              <Link
+                to={'/rating?page=1'}
+                className={styles['menu-item']}
+                onClick={handleCloseMobileMenu}
+              >
                 Рейтинг
               </Link>
               <button
